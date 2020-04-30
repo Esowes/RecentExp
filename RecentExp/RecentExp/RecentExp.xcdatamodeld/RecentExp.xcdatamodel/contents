@@ -8,11 +8,11 @@
         <attribute name="isSimulator" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <entity name="Takeoffs" representedClassName="Takeoffs" syncable="YES" codeGenerationType="class">
-        <attribute name="aircraftType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="airportName" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="aircraftType" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="airportName" attributeType="String" defaultValueString=""/>
         <attribute name="eventDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="identNumber" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="isSimulator" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isSimulator" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <elements>
         <element name="Landings" positionX="-54" positionY="27" width="128" height="118"/>

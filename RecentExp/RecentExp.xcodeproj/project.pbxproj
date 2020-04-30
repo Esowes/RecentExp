@@ -20,7 +20,7 @@
 		8400145324534D11000E5F6A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400145224534D10000E5F6A /* SettingsView.swift */; };
 		8400145524534EB0000E5F6A /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400145424534EB0000E5F6A /* constants.swift */; };
 		8400145724534ECE000E5F6A /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400145624534ECD000E5F6A /* EditEventView.swift */; };
-		8400145924534EEF000E5F6A /* setDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400145824534EEF000E5F6A /* setDateView.swift */; };
+		8400145924534EEF000E5F6A /* SetDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400145824534EEF000E5F6A /* SetDateView.swift */; };
 		84A6D6C8245407090060C65D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A6D6C7245407090060C65D /* CoreData.framework */; };
 		84A6D6CA2454076B0060C65D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A6D6C92454076B0060C65D /* SwiftUI.framework */; };
 /* End PBXBuildFile section */
@@ -63,7 +63,7 @@
 		8400145224534D10000E5F6A /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8400145424534EB0000E5F6A /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		8400145624534ECD000E5F6A /* EditEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
-		8400145824534EEF000E5F6A /* setDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setDateView.swift; sourceTree = "<group>"; };
+		8400145824534EEF000E5F6A /* SetDateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetDateView.swift; sourceTree = "<group>"; };
 		84A6D6C7245407090060C65D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84A6D6C92454076B0060C65D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -126,7 +126,7 @@
 				8400142224534BB3000E5F6A /* ContentView.swift */,
 				8400145224534D10000E5F6A /* SettingsView.swift */,
 				8400145624534ECD000E5F6A /* EditEventView.swift */,
-				8400145824534EEF000E5F6A /* setDateView.swift */,
+				8400145824534EEF000E5F6A /* SetDateView.swift */,
 				8400142424534BB7000E5F6A /* Assets.xcassets */,
 				8400142924534BB7000E5F6A /* LaunchScreen.storyboard */,
 				8400145424534EB0000E5F6A /* constants.swift */,
@@ -305,7 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8400145324534D11000E5F6A /* SettingsView.swift in Sources */,
-				8400145924534EEF000E5F6A /* setDateView.swift in Sources */,
+				8400145924534EEF000E5F6A /* SetDateView.swift in Sources */,
 				8400141C24534BB3000E5F6A /* AppDelegate.swift in Sources */,
 				8400142124534BB3000E5F6A /* RecentExp.xcdatamodeld in Sources */,
 				8400142324534BB3000E5F6A /* ContentView.swift in Sources */,
