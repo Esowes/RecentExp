@@ -1,0 +1,206 @@
+/* 
+  Localizable.strings
+  RecentExp
+
+  Created by Serge Ostrowsky on 30/05/2020.
+  Copyright © 2020 Serge Ostrowsky. All rights reserved.
+*/
+
+
+// Settings view:
+"All takeoffs & landings can be done in either aircraft or simulator." = "Les mouvements peuvent êtres effectués indifférement sur avion ou en simulateur.";
+
+"At least one takeoff and one landing has to be done in actual aircraft (either type if Mixed Fleet Flying)." = "Au moins un décollage et un atterrissage doit être effectué sur avion (n'importe lequel si CTR).";
+
+"Destructive action !" = "Action destructrice !";
+
+"Not displaying these will result in faster input of event.\n" = "Ne pas afficher ces données résulte en un processus  d'ajout de mouvement plus rapide.";
+
+"\nDisplay options.\nChoose if you want the following data to be displayed (and therefore, inputed !) :" = "\nOptions d'affichage.\nDonnées optionnelles à afficher (et donc à renseigner lors de l'ajout d'un mouvement) :";
+
+"Currency rules" = "Règles d'expérience récente";
+
+"Mixed Fleet Flying on these types require a 180 day HUD proficiency." = "La biqualification 777/787 ou 330/350, requiert un mouvement avec HUD dans les 180 jours";
+
+"User profile" = "Profil d'utilisateur";
+
+"YES, I'm sure" = "Oui, je suis sûr";
+
+"Are you SURE you want to erase ALL your data ?\nThis will also erase it from iCloud." = "Êtes-vous SÛR de vouloir effacer toutes vos données ?\nCela effacera aussi la sauvegarde iCloud.";
+
+"Cancel" = "Annuler";
+
+"❗️WARNING❗️" = "❗️ATTENTION❗️";
+
+"Erase all entries" = "Effacer toutes les données";
+
+"Display flight number ?" = "Afficher le numéro de vol ?";
+
+"Display airport code ?" = "Afficher le code aéroport ?";
+
+"ICAO" = "OACI";
+
+"Dual type 330/350 or 777/787 ?" = "Qualifié 330/350 ou 777/787 ?";
+
+"Settings %@" = "Réglages %@";
+
+"Done" = "Enregistrer";
+
+"Language" = "Language de l'application";
+
+"Language footer" = "Le choix du language (Anglais ou Français pour le moment) se fait maintenant depuis les réglages de votre appareil. Le bouton ci-dessus vous y enverra directement.";
+
+"English" = "Anglais";
+
+"French" = "Français";
+
+// Content View :
+"Reference Date :" = "Date de référence :";
+
+"Set to TODAY" = "Set to TODAY"; // Context Menu of Ref Date line
+
+"Airline Pilot Currency" = "Airline Pilot Currency"; // Title of main view
+
+"Takeoffs" = "Takeoffs";
+
+"Edit entry" = "Edit entry"; // Context menu of list item
+
+"Landings" = "Landings";
+
+"No settings yet" = "No settings yet";
+
+"Please visit settings" = "Please visit settings";
+
+"\n\nThe app needs to know a little bit about your pilot profile and your display preferences." = "\n\nThe app needs to know a little bit about your pilot profile and your display preferences.";
+
+"NOT CURRENT" = "NOT CURRENT";
+
+"You are missing :\n%@ takeoff(s) and\n%@ landing(s) in the last 90 days." = "You are missing :\n%@ takeoff(s) and\n%@ landing(s) in the last 90 days.";
+
+"Not enough takeoffs to be current.\nMissing %@ takeoff(s) in the last 90 days." = "Not enough takeoffs to be current.\nMissing %@ takeoff(s) in the last 90 days.";
+
+"Not enough landings to be current.\nMissing %@ landing(s) in the last 90 days." = "Not enough landings to be current.\nMissing %@ landing(s) in the last 90 days.";
+
+"330 / 350    ICAO rules    180d HUD req" = "330 / 350    ICAO rules    180d HUD req";
+
+"777 / 787    ICAO rules    180d HUD req" = "777 / 787    ICAO rules    180d HUD req";
+
+"Single type    ICAO rules" = "Single type    ICAO rules";
+
+"330 / 350    AF rules    180d HUD req" = "330 / 350    AF rules    180d HUD req";
+
+"777 / 787    AF rules    180d HUD req" = "777 / 787    AF rules    180d HUD req";
+
+"Single type    AF rules" = "Single type    AF rules";
+
+"either a takeoff or a landing" = "either a takeoff or a landing";
+
+"a LANDING" = "a LANDING";
+
+"a TAKEOFF" = "a TAKEOFF";
+
+"Current until today." = "Current until today.";
+
+"Current until reference date : %@" = "Current until reference date : %@";
+
+"Current until %@ - %@" = "Current until %@ - %@";
+
+"Current until %@, %@ from reference date." = "Current until %@, %@ from reference date.";
+
+"Not Current since %@, %@" = "Not Current since %@, %@";
+
+"Not current due to overdue HUD operations." = "Not current due to overdue HUD operations.";
+
+"On the reference date, you will not have used the HUD in over 180 days " = "On the reference date, you will not have used the HUD in over 180 days ";
+
+"Limiting event was  %@, on  %@.\nLatest HUD use was on  %@, you have to use it again within the next  %@" = "Limiting event was  %@, on  %@.\nLatest HUD use was on  %@, you have to use it again within the next  %@";
+
+"Seems like a sim session is in order." = "Seems like a sim session is in order.";
+
+"Current until %@, %@" = "Current until %@, %@";
+
+//"Current until %@, %@" = "Current until %@, %@";
+
+//"Not Current since %@, %@" = "Not Current since %@, %@";
+
+"Limiting event was %@, on %@." = "Limiting event was %@, on %@.";
+
+"No real takeoff and landing in the last 90 days.\nA sim session is in order." = "No real takeoff and landing in the last 90 days.\nA sim session is in order.";
+
+"No real landing in the last 90 days.\nA sim session is in order." = "No real landing in the last 90 days.\nA sim session is in order.";
+
+"No real takeoff in the last 90 days.\nA sim session is in order." = "No real takeoff in the last 90 days.\nA sim session is in order.";
+
+//"Current until %@, %@" = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "in 1 day." : "in \(daysDiff) days.")";
+
+//"Current until %@, %@" = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "1 day after reference date." : "\(daysDiff) days after reference date.")";
+
+"Limiting event was %@, on %@.\nNext takeoff in A330 within %@\nNext takeoff in A350 within %@" = "Limiting event was %@, on %@.\nNext takeoff in A330 within %@\nNext takeoff in A350 within %@";
+
+"Limiting event was %@, on %@.\nNext takeoff in 777 within %@\nNext takeoff in 787 within %@" = "Limiting event was %@, on %@.\nNext takeoff in 777 within %@\nNext takeoff in 787 within %@";
+
+"❗️NOT CURRENT takeoff A350❗️You needed an A350 takeoff within the last 60 days.\nYou can still takeoff in an A330 for %@" = "❗️NOT CURRENT takeoff A350❗️You needed an A350 takeoff within the last 60 days.\nYou can still takeoff in an A330 for %@";
+
+"❗️NOT CURRENT takeoff 787❗️You needed a 787 takeoff within the last 60 days.\nYou can still takeoff in a 777 for %@" = "❗️NOT CURRENT takeoff 787❗️You needed a 787 takeoff within the last 60 days.\nYou can still takeoff in a 777 for %@";
+
+"❗️NOT CURRENT takeoff A330❗️You needed an A330 takeoff within the last 60 days.\nYou can still takeoff in an A350 for %@" = "❗️NOT CURRENT takeoff A330❗️You needed an A330 takeoff within the last 60 days.\nYou can still takeoff in an A350 for %@";
+
+"❗️NOT CURRENT takeoff 777❗️You needed a 777 takeoff within the last 60 days.\nYou can still takeoff in a 787 for %@" = "❗️NOT CURRENT takeoff 777❗️You needed a 777 takeoff within the last 60 days.\nYou can still takeoff in a 787 for %@";
+
+"❗️ONLY CURRENT for landings❗️You logged no takeoffs on either type within the last 60 days" = "❗️ONLY CURRENT for landings❗️You logged no takeoffs on either type within the last 60 days";
+
+"\nNext landing in A330 within %@\nNext landing in A350 within %@" = "\nNext landing in A330 within %@\nNext landing in A350 within %@";
+
+"Limiting event was %@, on %@.\nNext landing in A330 within %@\nNext landing in A350 within %@" = "Limiting event was %@, on %@.\nNext landing in A330 within %@\nNext landing in A350 within %@";
+
+"\nNext landing in 777 within %@\nNext landing in 787 within %@" = "\nNext landing in 777 within %@\nNext landing in 787 within %@";
+
+"Limiting event was %@, on %@.\nNext landing in 777 within %@\nNext landing in 787 within %@" = "Limiting event was %@, on %@.\nNext landing in 777 within %@\nNext landing in 787 within %@";
+
+"❗️NOT CURRENT landing A350❗️You needed an A350 landing within the last 60 days.\nYou can still land an A330 for %@" = "❗️NOT CURRENT landing A350❗️You needed an A350 landing within the last 60 days.\nYou can still land an A330 for %@";
+
+"❗️NOT CURRENT landing 787❗️You needed a 787 landing within the last 60 days.\nYou can still land a 777 for %@" = "❗️NOT CURRENT landing 787❗️You needed a 787 landing within the last 60 days.\nYou can still land a 777 for %@";
+
+"❗️NOT CURRENT landing A330❗️You needed an A330 landing within the last 60 days.\nYou can still land an A350 for %@" = "❗️NOT CURRENT landing A330❗️You needed an A330 landing within the last 60 days.\nYou can still land an A350 for %@";
+
+"❗️NOT CURRENT landing 777❗️You needed a 777 landing within the last 60 days.\nYou can still land a 787 for %@" = "❗️NOT CURRENT landing 777❗️You needed a 777 landing within the last 60 days.\nYou can still land a 787 for %@";
+
+"❗️ONLY CURRENT for takeoffs❗️You logged no landings on either type within the last 60 days" = "❗️ONLY CURRENT for takeoffs❗️You logged no landings on either type within the last 60 days";
+
+"No takeoffs and landings in either type in the last 60 days." = "No takeoffs and landings in either type in the last 60 days.";
+
+"No real takeoffs and landing in the last 90 days.\nA sim session is in order." = "No real takeoffs and landing in the last 90 days.\nA sim session is in order.";
+
+"No real landings in the last 90 days.\nA sim session is in order." = "No real landings in the last 90 days.\nA sim session is in order.";
+
+"No real takeoffs in the last 90 days.\nA sim session is in order." = "No real takeoffs in the last 90 days.\nA sim session is in order.";
+
+// EventRow
+
+"dd MMM yy" = "dd MMM yy"; // The dateFormatter string
+
+// EditEvent
+"Airport : " = "Airport : "; // Airport field
+
+"Flight # : " = "Flight # : ";
+
+"Flight" = "Flight"; // Flight/Sim segmented control
+
+"Simulator" = "Simulator";
+
+"Today" = "Today";
+
+"Event edition" = "Event edition";
+
+// Create Event
+
+"Event creation" = "Event creation"; // Title
+
+"Enter Airport Code" = "Enter Airport Code";
+
+"IATA or ICAO Code" = "IATA or ICAO Code";
+
+"Enter Flight number" = "Enter Flight number";
+
+// Set Date view
+"Set Reference date :" = "Set Reference date :"; // Title
