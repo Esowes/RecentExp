@@ -57,7 +57,7 @@
 // Content View :
 "Reference Date :" = "Date de référence :";
 
-"Set to TODAY" = "Set to TODAY"; // Context Menu of Ref Date line
+"Set to TODAY" = "Régler sur la date du jour"; // Context Menu of Ref Date line
 
 "Airline Pilot Currency" = "Airline Pilot Currency"; // Title of main view
 
