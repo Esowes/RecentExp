@@ -20,6 +20,9 @@ struct ContentView: View {
 
     @State var modalIsPresented = false // The "settingsView" modally presented as a sheet
     @State var screenSizeHeight: CGFloat = 0.0 // This is for the GeometryReader
+    
+   // var rowHeight: CGFloat = 50
+    
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
     // formatter.dateStyle = .long
@@ -188,14 +191,6 @@ struct ContentView: View {
                                         {   Text("Edit entry")
                                             Image(systemName: "square.and.pencil")
                                         }
-    //                                        Button(action: {
-    //                                            self.managedObjectContext.delete(item)
-    //                                            self.saveContext()
-    //                                        }) {
-    //                                            Text("Erase entry")
-    //                                                .foregroundColor(Color(UIColor.systemRed))
-    //                                            Image(systemName: "location.circle")
-    //                                            }
                                     } // END of ContextMenu
                                 } // For Each end
                                 .onDelete { indexSet in
@@ -205,6 +200,7 @@ struct ContentView: View {
                                     }
                                 }
                                 .listRowBackground(LinearGradient(gradient: Gradient(colors: [Color(UIColor.systemGray6), Color(UIColor.systemGray2)]), startPoint: .top, endPoint: .bottom))
+                               // .frame(height: rowHeight)
                             } // END of Takeoffs List
                             }
                                 .frame(height: inputHeight*0.4)

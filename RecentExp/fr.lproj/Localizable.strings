@@ -59,23 +59,23 @@
 
 "Set to TODAY" = "Régler sur la date du jour"; // Context Menu of Ref Date line
 
-"Airline Pilot Currency" = "Airline Pilot Currency"; // Title of main view
+"Airline Pilot Currency" = "Expérience Récente PL"; // Title of main view
 
-"Takeoffs" = "Takeoffs";
+"Takeoffs" = "Décollages";
 
-"Edit entry" = "Edit entry"; // Context menu of list item
+"Edit entry" = "Édition"; // Context menu of list item
 
-"Landings" = "Landings";
+"Landings" = "Atterrissages";
 
-"No settings yet" = "No settings yet";
+"No settings yet" = "Réglages non renseignés";
 
-"Please visit settings" = "Please visit settings";
+"Please visit settings" = "Veuillez d'abord visiter la page des réglages.";
 
-"\n\nThe app needs to know a little bit about your pilot profile and your display preferences." = "\n\nThe app needs to know a little bit about your pilot profile and your display preferences.";
+"\n\nThe app needs to know a little bit about your pilot profile and your display preferences." = "\n\L'application a besoin de quelques informations sur votre profil de pilote et vos préférences d'affichage.";
 
-"NOT CURRENT" = "NOT CURRENT";
+"NOT CURRENT" = "PAS À JOUR";
 
-"You are missing :\n%@ takeoff(s) and\n%@ landing(s) in the last 90 days." = "You are missing :\n%@ takeoff(s) and\n%@ landing(s) in the last 90 days.";
+"You are missing :\n%@ takeoff(s) and\n%@ landing(s) in the last 90 days." = "Il vous manque :\n%@ décollage(s) et\n%@ atterrissage(s) dans les 90 jours.";
 
 "Not enough takeoffs to be current.\nMissing %@ takeoff(s) in the last 90 days." = "Not enough takeoffs to be current.\nMissing %@ takeoff(s) in the last 90 days.";
 

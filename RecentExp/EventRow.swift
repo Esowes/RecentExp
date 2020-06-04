@@ -33,7 +33,6 @@ struct EventRow: View {
     var body: some View {
         HStack (alignment: .center)
         {
-            Spacer(minLength: 0)
             if event.isSimulator
             {
              Image(systemName: "s.circle")
@@ -58,8 +57,7 @@ struct EventRow: View {
                     }
             .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
 
-        }
-            else if UserDefaults.standard.bool(forKey: kairportNameDisplayed) {
+        } else if UserDefaults.standard.bool(forKey: kairportNameDisplayed) {
                 Text(event.airportName ?? "")
                 .font(.headline)
                 .modifier(textLayout())
@@ -90,7 +88,7 @@ struct EventRow: View {
                             else if UserDefaults.standard.integer(forKey: kdualTypeSelection) == 1
                         {Text("787").font(.footnote).modifier(textLayout()) }
                             }
-                }
+                } // end of Vstack
                 .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
             } else // NOT biQualif
             {
@@ -99,7 +97,6 @@ struct EventRow: View {
                 .modifier(textLayout())
                 .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
             }
-            Spacer(minLength: 0)
         } // END of HStack
         .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
 
