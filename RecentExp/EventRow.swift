@@ -98,7 +98,9 @@ struct EventRow: View {
                 .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
             }
         } // END of HStack
+            .frame(maxWidth: 200)
         .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
+        
 
  
     } // END of body

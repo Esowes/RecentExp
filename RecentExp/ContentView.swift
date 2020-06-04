@@ -178,7 +178,7 @@ struct ContentView: View {
                                 .font(.system(.headline , design: .rounded))
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding(.top)
-                            List {
+                                List {
                                 ForEach (fetchedTakeoffs, id: \.self) { item in
                                     EventRow(event: item)
                                         .contextMenu {
@@ -192,6 +192,7 @@ struct ContentView: View {
                                             Image(systemName: "square.and.pencil")
                                         }
                                     } // END of ContextMenu
+                                    
                                 } // For Each end
                                 .onDelete { indexSet in
                                     for index in indexSet {
