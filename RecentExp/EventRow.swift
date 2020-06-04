@@ -31,6 +31,7 @@ struct EventRow: View {
     }
     
     var body: some View {
+        VStack {
         HStack (alignment: .center)
         {
             if event.isSimulator
@@ -99,7 +100,9 @@ struct EventRow: View {
             }
         } // END of HStack
             .frame(maxWidth: 200)
-        .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
+            .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
+        } // End of VStack
+            .frame(maxWidth: .infinity)
         
 
  
