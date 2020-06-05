@@ -102,7 +102,7 @@ struct EventRow: View {
             .frame(maxWidth: 200)
             .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
         } // End of VStack
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity) // This is to ensure centering on larger displays
         
 
  
