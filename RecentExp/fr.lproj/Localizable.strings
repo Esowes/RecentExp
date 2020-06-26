@@ -81,7 +81,7 @@
 
 "Not enough landings to be current.\nMissing %@ landing(s) in the last 90 days." = "Not enough landings to be current.\nMissing %@ landing(s) in the last 90 days.";
 
-"330 / 350    ICAO rules    180d HUD req" = "330 / 350    ICAO rules    180d HUD req";
+"330 / 350    ICAO rules    180d HUD req" = "330 / 350    règles OACI    180j HUD req";
 
 "777 / 787    ICAO rules    180d HUD req" = "777 / 787    ICAO rules    180d HUD req";
 
