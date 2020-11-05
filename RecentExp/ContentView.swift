@@ -55,16 +55,6 @@ struct ContentView: View {
         }
     }
     
-    struct dateButtonDraw: ViewModifier {
-      func body(content: Content) -> some View {
-        return content
-            .font(.headline)
-            .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-            .background(Color(UIColor.systemBlue))
-            .cornerRadius(12)
-            .foregroundColor(Color.white)
-        }
-    }
  // MARK: - Body
     var body: some View {
             
@@ -74,6 +64,7 @@ struct ContentView: View {
              let detailString = stringArray[2]
              let boolString = stringArray[3]
              let isCurrent = boolString == "0" ? false : true
+        
         return ZStack {
             GeometryReader { g in
                 NavigationView {
@@ -93,7 +84,7 @@ struct ContentView: View {
                     Text(recapString)
                         .font(.footnote)
                         .foregroundColor(Color(UIColor.systemBlue))
-                        .padding(.bottom)
+                        //.padding(.bottom)
                     VStack {
                     Text(mainString)
                         .bold()
@@ -145,7 +136,7 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding(.top)
                                 List {
-                                ForEach (fetchedTakeoffs, id: \.self) { item in
+                                    ForEach (fetchedTakeoffs, id: \.self) { item in
                                     EventRow(event: item)
                                         .contextMenu {
                                         Button(action: {
@@ -174,7 +165,7 @@ struct ContentView: View {
                                 .modifier(listsSetup())
                         
                             Spacer()
-                    
+                    // Add Takeoff button
                             Button(action: {
                                 self.modalViewCaller = 3 // To tell the sheet which view to display
                                 UserDefaults.standard.set(false, forKey:kIsEventLanding)
@@ -324,7 +315,7 @@ struct ContentView: View {
     {
         recapString = "No settings yet"
         aString = "Please visit settings"
-        bString = "\n\nThe app needs to know a little bit about your pilot profile and your display preferences."
+        bString = "\nThe app needs to know a little bit about your pilot profile and your display preferences."
         isCurrent = "0"
     }
     else {
