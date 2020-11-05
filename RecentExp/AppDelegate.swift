@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.register(defaults: [
         "biTypeRated": false,
         "dual type": 0, // 0 is 330/350, 1 is 777/787
-        "activeDate": Date(),
         "rules selection": 0, // 0 is ICAO rules, 1 is AF rules
         "Is User Instructor" : false,
         "Flight number is displayed" : true,

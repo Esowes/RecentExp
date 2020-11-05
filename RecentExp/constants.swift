@@ -11,7 +11,6 @@ import SwiftUI
 
 let kmainView = "MainView"
 let ksetDateView = "SetDateView"
-let kactiveDate = "activeDate"
 let kactiveEventUUID = "activeEventUUID"
 let kbiQualif = "biTypeRated"
 let kdualTypeSelection = "dual type"

@@ -87,41 +87,7 @@ struct ContentView: View {
                                     .padding(.top)
                 Divider()
 
-    // MARK: - Ref date :
-                Group {
-                    HStack(alignment: .center, spacing: 10) { // Ref date HStack
-                    Text("Reference Date :")
-                           .font(.headline)
-                        Button(action: {
-                            self.modalViewCaller = 5 // SetDateView
-                            self.modalIsPresented = true// Code here to trigger the SetDate modal view
-                            
-                        }) {
-                            if self.dateFormatter.string(from: UserDefaults.standard.object(forKey: kactiveDate) as! Date) == self.dateFormatter.string(from: Date())
-                            {
-                                Text("Today")
-                                .modifier(dateButtonDraw())
-                            }
-                            else {
-                                Text(self.dateFormatter.string(from: UserDefaults.standard.object(forKey: kactiveDate) as! Date))
-                                .modifier(dateButtonDraw())
-                            }
-                        }
-                } // END of Ref date HStack
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                        .contextMenu {
-                        Button(action: {
-                            print("Ref date text Context menu triggered")
-                            self.appState.referenceDate = Date()
-                             UserDefaults.standard.set(self.appState.referenceDate, forKey: kactiveDate)
-                                        })
-                                        {   Text("Set to TODAY")
-                                            Image(systemName: "calendar")
-                                        }
 
-                                    } // END of ContextMenu
-                Divider()
-                } // END of 2nd Group
   // MARK: - Currency texts :
                 Group {
                     Text(recapString)
@@ -150,7 +116,7 @@ struct ContentView: View {
             .navigationBarTitle("Airline Pilot Currency", displayMode: .inline)
             .navigationBarItems(leading: (
                 Button(action: {
-                    self.modalViewCaller = 6 // SettingsView
+                    self.modalViewCaller = 5 // SettingsView
                     self.modalIsPresented = true // setting this @State variable to true, hence changing its value, is enough to trigger the presentation of the modal view (the Sheet)
                 }
                     ) {
@@ -303,11 +269,6 @@ struct ContentView: View {
             .modifier(DisableModalDismiss(disabled: true))
             .navigationViewStyle(StackNavigationViewStyle())
         } else if modalViewCaller == 5 {
-            SetDateView()
-            .environmentObject(AppState())
-            .modifier(DisableModalDismiss(disabled: true))
-            .navigationViewStyle(StackNavigationViewStyle())
-        } else if modalViewCaller == 6 {
             SettingsView().environment(\.managedObjectContext, self.managedObjectContext)
                 .environmentObject(AppState())
             .modifier(DisableModalDismiss(disabled: true))
@@ -347,7 +308,7 @@ struct ContentView: View {
         var aString = "" // The currency string
         var bString = "" // The details string
         var recapString = "" // The recap string
-        let refDate = UserDefaults.standard.object(forKey: kactiveDate) as! Date
+        let refDate = Date()
         let date90Prior = refDate.addingTimeInterval(-7776000)
         var myArray = ["","","",""]
     
@@ -406,7 +367,7 @@ struct ContentView: View {
         var bString = ""
         var recapString = ""
         var limitingEventString = ""
-        let refDate = UserDefaults.standard.object(forKey: kactiveDate) as! Date
+        let refDate = Date()
         let date90Prior = refDate.addingTimeInterval(-7776000)
         let date180Prior = refDate.addingTimeInterval(-7776000*2)
         var myArray2 = ["","","",""]
@@ -481,21 +442,11 @@ struct ContentView: View {
     if currencyRules == 0 || currencyRules == 1 { // ICAO mono or bi
    
         if Calendar.current.isDate(currencydate, inSameDayAs: refDate) { // The currency date is the same day as the ref date
-            if Calendar.current.isDate(refDate, inSameDayAs: Date()) { // The refDate is TODAY
-                aString = "Current until today."
-            } else {
-                aString = "Current until reference date : \(dateFormatter.string(from: refDate))"
-            }
+            aString = "Current until today."
             isCurrent = "1"
         } else if currencydate > refDate { // current until a future date
             
-            if Calendar.current.isDate(refDate, inSameDayAs: Date()) // The refDate is TODAY
-            {
-                aString = "Current until \(dateFormatter.string(from: currencydate)) - \(daysDiff == 1 ? "\(daysDiff) day -" : "\(daysDiff) days -")"
-            } else // RefDate is not today
-            {
-                aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "\(daysDiff) day" : "\(daysDiff) days") from reference date."
-            }
+            aString = "Current until \(dateFormatter.string(from: currencydate)) - \(daysDiff == 1 ? "\(daysDiff) day -" : "\(daysDiff) days -")"
                     isCurrent = "1"
             
                 } else { // Not current
@@ -537,27 +488,14 @@ struct ContentView: View {
         if toffScan.metReq && ldgScan.metReq // 3 events with at least one real for both toffs and ldgs
         {
             if Calendar.current.isDate(currencydate, inSameDayAs: refDate) { // The currency date is the same day as the ref date
-                if Calendar.current.isDate(refDate, inSameDayAs: Date()) { // The refDate is TODAY
-                    aString = "Current until today."
-                } else {
-                    aString = "Current until reference date : \(dateFormatter.string(from: refDate))"
-                }
+                aString = "Current until today."
                 isCurrent = "1"
             } else if currencydate > refDate { // current until a future date
-                
-                if Calendar.current.isDate(refDate, inSameDayAs: Date()) // The refDate is TODAY
-                {
-                    aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "1 day from now." : "\(daysDiff) days from now.")"
-                } else // RefDate is not today
-                {
-                    aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "1 day after reference date." : "\(daysDiff) days after reference date.")"
-                }
-                        isCurrent = "1"
-                
+                aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "1 day from now." : "\(daysDiff) days from now.")"
+                isCurrent = "1"
                     } else // Not current
                     {
                         aString = "Not Current since \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "1 day ago." : "\(daysDiff) days ago.")"
-                        
                         isCurrent = "0"
                     }
             
@@ -597,23 +535,11 @@ struct ContentView: View {
             if toffScan.metReq && ldgScan.metReq // 3 events with at least one real for both toffs and ldgs
             {
                 if Calendar.current.isDate(currencydate, inSameDayAs: refDate) { // The currency date is the same day as the ref date
-                    if Calendar.current.isDate(refDate, inSameDayAs: Date()) { // The refDate is TODAY
-                        aString = "Current until today."
-                    } else {
-                        aString = "Current until reference date : \(dateFormatter.string(from: refDate))"
-                    }
+                    aString = "Current until today."
                     isCurrent = "1"
                 } else if currencydate > refDate { // current until a future date
-                    
-                    if Calendar.current.isDate(refDate, inSameDayAs: Date()) // The refDate is TODAY
-                    {
-                        aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "in 1 day." : "in \(daysDiff) days.")"
-                    } else // RefDate is not today
-                    {
-                        aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "1 day after reference date." : "\(daysDiff) days after reference date.")"
-                    }
-                            isCurrent = "1"
-                    
+                    aString = "Current until \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "in 1 day." : "in \(daysDiff) days.")"
+                    isCurrent = "1"
                         }
                 else { // Not current
                             aString = "Not Current since \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "\(daysDiff) day ago." : "\(daysDiff) days ago.")"
@@ -833,7 +759,6 @@ struct ContentView: View {
             if t1 >= 1 {
                 if earliestType1Event == Date(timeIntervalSince1970: 0) { // We have not yet encountered a t1
                     earliestType1Event = incrementalDate}
-                
             }
             if t2 >= 1 {
                 if earliestType2Event == Date(timeIntervalSince1970: 0) { // We have not yet encountered a t2
@@ -904,7 +829,7 @@ struct ContentView: View {
     func sixtyDaysCheck(type: Int, eventDate: Date) -> (deltaToRef: Int, found: Bool) {
         
         var wasFound = false
-        let refDate = UserDefaults.standard.object(forKey: kactiveDate) as! Date
+        let refDate = Date()
         
         let delta = Calendar.current.dateComponents([.day], from: eventDate, to: refDate).day ?? 0
         

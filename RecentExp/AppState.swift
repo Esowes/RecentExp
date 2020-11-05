@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 class AppState: ObservableObject {
-    @Published var referenceDate: Date = UserDefaults.standard.object(forKey: kactiveDate) as? Date ?? Date()
+
     @Published var isBiqualif: Bool = UserDefaults.standard.bool(forKey: kbiQualif)
     @Published var dualTypeSelection: Int = UserDefaults.standard.integer(forKey: kdualTypeSelection)
     @Published var rulesSelection: Int = UserDefaults.standard.integer(forKey: krulesSelection)
@@ -21,7 +21,7 @@ class AppState: ObservableObject {
     
     
     func updateValues() {
-        self.referenceDate = UserDefaults.standard.object(forKey: kactiveDate) as? Date ?? Date()
+
         self.isBiqualif = UserDefaults.standard.bool(forKey: kbiQualif)
         self.dualTypeSelection = UserDefaults.standard.integer(forKey: kdualTypeSelection)
         self.rulesSelection = UserDefaults.standard.integer(forKey: krulesSelection)
