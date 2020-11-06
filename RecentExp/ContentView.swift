@@ -30,7 +30,7 @@ struct ContentView: View {
      return formatter
      }
         
-   @State private var modalViewCaller = 0
+   @State var modalViewCaller = 0
     
     // MARK: - View modifiers :
     
@@ -103,6 +103,7 @@ struct ContentView: View {
             } // END of main VStack
             .onAppear() {
                 self.modalViewCaller = 0
+                print("\n\n*********** Content View onAppear triggered ! ************\n")
             }
             .navigationBarTitle("Airline Pilot Currency", displayMode: .inline)
             .navigationBarItems(leading: (
@@ -119,10 +120,16 @@ struct ContentView: View {
         } // End of ScrollView
             
         } // END of NavigationView
+                .onAppear() {
+                    self.appState.updateValues()
+                }
             } // End of GeometryReader
         } // End of ZStack
-        .sheet(isPresented: $modalIsPresented, content: sheetContent)
+        .sheet(isPresented: $modalIsPresented) {
+            sheetContent(modalViewCaller: $modalViewCaller)     // << here !!
+                }
         .navigationViewStyle(StackNavigationViewStyle())
+        
         
 
     } // END of var body: some View
@@ -242,35 +249,38 @@ struct ContentView: View {
     }
   // MARK: - @ViewBuilder func sheetContent() :
     
-    @ViewBuilder func sheetContent() -> some View {
-        if modalViewCaller == 1 {
-            EditEventView().environment(\.managedObjectContext, self.managedObjectContext) // Due to a bug in SwiftUI, we need to pass the managedObjectContext
-            .modifier(DisableModalDismiss(disabled: true)) // This prevents the dismissal of the modal view by swiping down, thanks to the UIApplication extension in AppDelegate
-            .navigationViewStyle(StackNavigationViewStyle()) // To avoid splitView on iPad
-        } else if modalViewCaller == 2 {
-            EditEventView().environment(\.managedObjectContext, self.managedObjectContext)
-            .modifier(DisableModalDismiss(disabled: true))
-            .navigationViewStyle(StackNavigationViewStyle())
-        } else if modalViewCaller == 3 {
-            CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
-            .modifier(DisableModalDismiss(disabled: true))
-            .navigationViewStyle(StackNavigationViewStyle())
-        } else if modalViewCaller == 4 {
-            CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
-            .modifier(DisableModalDismiss(disabled: true))
-            .navigationViewStyle(StackNavigationViewStyle())
-        } else if modalViewCaller == 5 {
-            SettingsView().environment(\.managedObjectContext, self.managedObjectContext)
-                .environmentObject(AppState())
-            .modifier(DisableModalDismiss(disabled: true))
-            .navigationViewStyle(StackNavigationViewStyle())
-            .onDisappear {
-                print("Settings view dissappeared at \(Date().debugDescription)")
-                self.modalViewCaller = 0
-                self.appState.updateValues() // This triggers a re-render of the body by changing the appState @Environment(Observed) object, and allows the UI of the cells of the Lists to be updated if settings were changed
-                }
-            }
+    struct sheetContent: View {
+        @Environment(\.managedObjectContext) var managedObjectContext
+        @Binding var modalViewCaller: Int // Binding to the @State modalViewCaller variable from ContentView
+        @EnvironmentObject var appState: AppState
         
+        var body: some View {
+          if modalViewCaller == 1 {
+            EditEventView().environment(\.managedObjectContext, self.managedObjectContext) // Due to a bug in SwiftUI, we need to pass the managedObjectContext
+                    .modifier(DisableModalDismiss(disabled: true)) // This prevents the dismissal of the modal view by swiping down, thanks to the UIApplication extension in AppDelegate
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .onDisappear { self.modalViewCaller = 0 }
+            } else if modalViewCaller == 2 {
+                    EditEventView().environment(\.managedObjectContext, self.managedObjectContext)
+                    .modifier(DisableModalDismiss(disabled: true))
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .onDisappear { self.modalViewCaller = 0 }
+            } else if modalViewCaller == 3 {
+                CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
+                .modifier(DisableModalDismiss(disabled: true))
+                .navigationViewStyle(StackNavigationViewStyle())
+                .onDisappear { self.modalViewCaller = 0 }
+            } else if modalViewCaller == 4 {
+                CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
+                .modifier(DisableModalDismiss(disabled: true))
+                .navigationViewStyle(StackNavigationViewStyle())
+            } else if modalViewCaller == 5 {
+                SettingsView().environment(\.managedObjectContext, self.managedObjectContext)
+                    .environmentObject(AppState())
+                .modifier(DisableModalDismiss(disabled: true))
+                .navigationViewStyle(StackNavigationViewStyle())
+                }
+        }
     } // END of func sheetContent
     
   // MARK: - saveContext()
@@ -369,7 +379,7 @@ struct ContentView: View {
     // Array of Landings in last 90 days from ref date :
     let last90daysLandingsArray = fetchedLandings.filter { $0.eventDate! >= date90Prior }
         
-        // We define the currencyRules :
+        // We define the currencyRules and build the recapString:
     if UserDefaults.standard.integer(forKey: krulesSelection) == 0 { // ICAO
         if UserDefaults.standard.bool(forKey: kbiQualif) {
             currencyRules = 1
@@ -760,7 +770,7 @@ struct ContentView: View {
             print("This set of rules is unknown")
         } // End of Switch 1
 
-        print("**************\nInside scan loop of Landings array :\(array[index].isLanding)\nChecking event # \(index) with rule set # \(rule)\nnbOf events = \(nbOfEvents), real events: \(r), type 1: \(t1), type 2: \(t2)\nOldest limiting date : \(dateFormatter.string(from: oldestLimitingDate))\nmetRequirements: \(metRequirements)\n")
+//        print("**************\nInside scan loop of Landings array :\(array[index].isLanding)\nChecking event # \(index) with rule set # \(rule)\nnbOf events = \(nbOfEvents), real events: \(r), type 1: \(t1), type 2: \(t2)\nOldest limiting date : \(dateFormatter.string(from: oldestLimitingDate))\nmetRequirements: \(metRequirements)\n")
         
     } // End of for loop
 

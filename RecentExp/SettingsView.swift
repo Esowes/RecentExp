@@ -17,6 +17,8 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @EnvironmentObject var appState: AppState
+    
+    //@Binding var modalViewCaller : Int
         
     @FetchRequest(entity: Events.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Events.eventDate, ascending: false)]) var allEvents: FetchedResults<Events> // This fetches all the events
     
@@ -157,6 +159,7 @@ struct SettingsView: View {
                 Button("Done") {
                         self.saveDefaults() // We try to save once more if needed
                         self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+                 //   self.modalViewCaller = 0
                 }
             )
             .listStyle(GroupedListStyle())
@@ -164,7 +167,10 @@ struct SettingsView: View {
                 .onAppear() {
                     UserDefaults.standard.set(true, forKey: kinitialInstrViewed)
             }
-        } // END of Navigation view
+        } .onDisappear() {
+        self.appState.updateValues() // This triggers a re-render of the body by changing the appState @Environment(Observed) object, and allows the UI of the cells of the Lists to be updated if settings were changed // END of Navigation view
+            print("\n\n*********** Settings View onDissappear triggered ! ************\n")
+        }
     } // END of some View
     
     func eraseAllEvents() {
@@ -311,6 +317,7 @@ struct displayFooter: View {
 // MARK: Preview struct
 
 struct SettingsView_Previews: PreviewProvider {
+    
     static var previews: some View {
         
         return SettingsView().environmentObject(AppState())

@@ -143,6 +143,7 @@ struct EditEventView: View {
                 .navigationBarItems(
                     leading:
                     Button("Done") {
+                        print("Done pressed from editView")
                         self.saveEdits()
                         self.presentationMode.wrappedValue.dismiss() // This dismisses the view
                     }, // END of Button "Done"
