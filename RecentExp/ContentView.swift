@@ -8,10 +8,11 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
-    @EnvironmentObject var appState: AppState
+    @StateObject var appState: AppState
     
     @FetchRequest(entity: Events.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Events.eventDate, ascending: false)],
                   predicate: NSPredicate(format: "isLanding = %d", false)) var fetchedTakeoffs: FetchedResults<Events>
@@ -20,8 +21,6 @@ struct ContentView: View {
 
     @State var modalIsPresented = false // The "settingsView" modally presented as a sheet
     @State var screenSizeHeight: CGFloat = 0.0 // This is for the GeometryReader
-    
-   // var rowHeight: CGFloat = 50
     
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
@@ -60,6 +59,7 @@ struct ContentView: View {
             
              let stringArray = minimumEventsCheck()
              let recapString = stringArray[0]
+        print("\n*************\nBody was redrawn\nrecapString is : \(recapString)**************")
              let mainString = stringArray[1]
              let detailString = stringArray[2]
              let boolString = stringArray[3]
@@ -126,7 +126,7 @@ struct ContentView: View {
             } // End of GeometryReader
         } // End of ZStack
         .sheet(isPresented: $modalIsPresented) {
-            sheetContent(modalViewCaller: $modalViewCaller)     // << here !!
+            sheetContent(modalViewCaller: $modalViewCaller, appState: AppState())     // << here !!
                 }
         .navigationViewStyle(StackNavigationViewStyle())
         
@@ -252,7 +252,7 @@ struct ContentView: View {
     struct sheetContent: View {
         @Environment(\.managedObjectContext) var managedObjectContext
         @Binding var modalViewCaller: Int // Binding to the @State modalViewCaller variable from ContentView
-        @EnvironmentObject var appState: AppState
+        @StateObject var appState: AppState
         
         var body: some View {
           if modalViewCaller == 1 {
@@ -275,8 +275,7 @@ struct ContentView: View {
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
             } else if modalViewCaller == 5 {
-                SettingsView().environment(\.managedObjectContext, self.managedObjectContext)
-                    .environmentObject(AppState())
+                SettingsView(appState: AppState()).environment(\.managedObjectContext, self.managedObjectContext)
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
                 }
@@ -328,7 +327,38 @@ struct ContentView: View {
         bString = "\nThe app needs to know a little bit about your pilot profile and your display preferences."
         isCurrent = "0"
     }
-    else {
+    else // User HAS visited the settings view
+    {
+        // We create the recap string :
+    if UserDefaults.standard.integer(forKey: krulesSelection) == 0 { // ICAO
+        if UserDefaults.standard.bool(forKey: kbiQualif) {
+            if UserDefaults.standard.integer(forKey: kdualTypeSelection) == 0
+            {
+                recapString = "330 / 350    ICAO rules    180d HUD req"
+            } else
+            {
+                recapString = "777 / 787    ICAO rules    180d HUD req"
+            }
+        } else // Not biQualif
+        {
+            recapString = "Single type    ICAO rules"
+        }
+    } else if UserDefaults.standard.integer(forKey: krulesSelection) == 1 { // AF Rules
+        if UserDefaults.standard.bool(forKey: kbiQualif) {
+            if UserDefaults.standard.integer(forKey: kdualTypeSelection) == 0
+            {
+                recapString = "330 / 350    AF rules    180d HUD req"
+            } else
+            {
+                recapString = "777 / 787    AF rules    180d HUD req"
+            }
+        } else // Not biQualif
+        {
+            recapString = "Single type    AF rules"
+        }
+    }
+        // We display the rest :
+        
         if last90daysToffsArray.count < reqNbEvents && last90daysLandingsArray.count < reqNbEvents {
             aString = "NOT CURRENT"
             bString = "You are missing :\n\(reqNbEvents - last90daysToffsArray.count) takeoff(s) and\n\(reqNbEvents - last90daysLandingsArray.count) landing(s) in the last 90 days."
@@ -345,10 +375,9 @@ struct ContentView: View {
         }
             else    // We have enough events in both arrays to proceed
             {
-                recapString = currencyDetermination()[0]
-                aString = currencyDetermination()[1]
-                bString = currencyDetermination()[2]
-                isCurrent = currencyDetermination()[3]
+                aString = currencyDetermination()[0]
+                bString = currencyDetermination()[1]
+                isCurrent = currencyDetermination()[2]
         }
     }
     
@@ -366,7 +395,6 @@ struct ContentView: View {
         var currencyRules = 0 // 0 is ICAO, 1 is ICAO biQualif, 2 is AF mono, 3 is AF biQualif
         var aString = ""
         var bString = ""
-        var recapString = ""
         var limitingEventString = ""
         let refDate = Date()
         let date90Prior = refDate.addingTimeInterval(-7776000)
@@ -379,42 +407,22 @@ struct ContentView: View {
     // Array of Landings in last 90 days from ref date :
     let last90daysLandingsArray = fetchedLandings.filter { $0.eventDate! >= date90Prior }
         
-        // We define the currencyRules and build the recapString:
+        // We define the currencyRules :
     if UserDefaults.standard.integer(forKey: krulesSelection) == 0 { // ICAO
-        if UserDefaults.standard.bool(forKey: kbiQualif) {
+        if UserDefaults.standard.bool(forKey: kbiQualif)
+        {
             currencyRules = 1
-            // we build the recapString:
-            if UserDefaults.standard.integer(forKey: kdualTypeSelection) == 0
-            {
-                recapString = "330 / 350    ICAO rules    180d HUD req"
-            } else
-            {
-                recapString = "777 / 787    ICAO rules    180d HUD req"
-            }
         } else // Not biQualif
         {
             currencyRules = 0
-            // we build the recapString:
-            recapString = "Single type    ICAO rules"
-            
         }
     } else if UserDefaults.standard.integer(forKey: krulesSelection) == 1 { // AF Rules
-        if UserDefaults.standard.bool(forKey: kbiQualif) {
+        if UserDefaults.standard.bool(forKey: kbiQualif)
+        {
             currencyRules = 3
-            // we build the recapString:
-            if UserDefaults.standard.integer(forKey: kdualTypeSelection) == 0
-            {
-                recapString = "330 / 350    AF rules    180d HUD req"
-            } else
-            {
-                recapString = "777 / 787    AF rules    180d HUD req"
-            }
         } else // Not biQualif
         {
             currencyRules = 2
-            // we build the recapString:
-            recapString = "Single type    AF rules"
-            
         }
     }
     
@@ -703,7 +711,7 @@ struct ContentView: View {
 
         } // End of if currencyRules == 3
   
-        myArray2 = [recapString, aString, bString, isCurrent]
+        myArray2 = [aString, bString, isCurrent]
     
         return myArray2
     }
@@ -850,7 +858,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        return ContentView().environmentObject(AppState())
+        return ContentView(appState: AppState())
             .environment(\.managedObjectContext, context)
         
     }
