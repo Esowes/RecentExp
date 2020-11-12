@@ -89,6 +89,12 @@ struct SettingsView: View {
                         Text("ICAO").tag(0)
                         Text("Air France").tag(1)
                     }.pickerStyle(SegmentedPickerStyle())
+                    .onChange(of: rulesSelection,
+                              perform: { (value) in
+                                print("Picker value was changed : now is \(rulesSelection)")
+                                self.saveDefaults()
+                                print("The user default rule is : \(UserDefaults.standard.integer(forKey: krulesSelection))")
+                                        })
                     .padding(.horizontal)
                     } // End of ICAO currency Section
                 } // End og Group 1

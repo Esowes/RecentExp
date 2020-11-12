@@ -40,10 +40,10 @@ struct ContentView: View {
             return AnyView(content)
         }
 
-        func disableModalDismiss() {
-            guard let visibleController = UIApplication.shared.visibleViewController() else { return }
-            visibleController.isModalInPresentation = disabled
-        }
+    func disableModalDismiss() {
+        guard let visibleController = UIApplication.shared.visibleViewController() else { return }
+        visibleController.isModalInPresentation = disabled
+    }
     } // End of DisabledModalDismiss
     
     struct listsSetup: ViewModifier { // To stylize the Takeoff & landing lists
@@ -126,16 +126,13 @@ struct ContentView: View {
             } // End of GeometryReader
         } // End of ZStack
         .sheet(isPresented: $modalIsPresented) {
-            sheetContent(modalViewCaller: $modalViewCaller, appState: AppState())     // << here !!
+            sheetContent(modalViewCaller: $modalViewCaller, appState: appState)     // << here !!
                 }
         .navigationViewStyle(StackNavigationViewStyle())
-        
-        
 
     } // END of var body: some View
   // MARK: - TakeoffStackView()
     @ViewBuilder func TakeoffStackView(inputHeight: CGFloat) -> some View {
-
            VStack { // Takeoffs Vstack
                             VStack {
                             Text("Takeoffs")
@@ -187,8 +184,7 @@ struct ContentView: View {
                                 .frame(width: 100, height: 50)
                             }
                         }
-        
-    }
+    } // end of func TakeoffStackView
     
   // MARK: - LandingStackView()
       @ViewBuilder func LandingStackView(inputHeight: CGFloat) -> some View {
@@ -246,13 +242,13 @@ struct ContentView: View {
                                     .frame(width: 100, height: 50)
                                 }
                             } // End of Landings VStack
-    }
-  // MARK: - @ViewBuilder func sheetContent() :
+    } // end of func LandingStackView
     
+  // MARK: - struct sheetContent()
     struct sheetContent: View {
         @Environment(\.managedObjectContext) var managedObjectContext
         @Binding var modalViewCaller: Int // Binding to the @State modalViewCaller variable from ContentView
-        @StateObject var appState: AppState
+        @ObservedObject var appState: AppState // Binding to the appState in main
         
         var body: some View {
           if modalViewCaller == 1 {
@@ -275,7 +271,7 @@ struct ContentView: View {
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
             } else if modalViewCaller == 5 {
-                SettingsView(appState: AppState()).environment(\.managedObjectContext, self.managedObjectContext)
+                SettingsView(appState: appState).environment(\.managedObjectContext, self.managedObjectContext)
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
                 }
@@ -283,7 +279,6 @@ struct ContentView: View {
     } // END of func sheetContent
     
   // MARK: - saveContext()
-   
     private func saveContext() {
         
         // Save event:
@@ -299,10 +294,10 @@ struct ContentView: View {
 
     } // End of func saveContext()
     
-    // MARK: - minimumEventsCheck() :
-    
+    // MARK: - minimumEventsCheck()
   func minimumEventsCheck() -> [String] { // minimumNumberOfEventsCheck
         
+    //@ObservedObject var appState : AppState // Binding
         var isCurrent = "0"
         let reqNbEvents = 3
         var aString = "" // The currency string
@@ -387,7 +382,6 @@ struct ContentView: View {
     } // End of func currencyText() -> String
     
     // MARK: - func currencyDetermination()
-    
   func currencyDetermination() -> [String] {
         
         var isCurrent = "0"
@@ -716,8 +710,7 @@ struct ContentView: View {
         return myArray2
     }
 
-  // MARK: scanArray() -
-    
+  // MARK: - func scanArray()
   func scanArray(array: [Events], rule: Int) -> (real: Int,type1: Int,type2: Int, limitingDate: Date, lastType1Event: Date, lastType2Event: Date, metReq: Bool, arrayCount: Int) {
     var r = 0, t1 = 0, t2 = 0, nbOfEvents = 0
     let c = array.count
@@ -781,13 +774,11 @@ struct ContentView: View {
 //        print("**************\nInside scan loop of Landings array :\(array[index].isLanding)\nChecking event # \(index) with rule set # \(rule)\nnbOf events = \(nbOfEvents), real events: \(r), type 1: \(t1), type 2: \(t2)\nOldest limiting date : \(dateFormatter.string(from: oldestLimitingDate))\nmetRequirements: \(metRequirements)\n")
         
     } // End of for loop
-
     
     return (r, t1, t2, oldestLimitingDate, earliestType1Event, earliestType2Event, metRequirements, c)
-}
+} //END of func scanArray
 
-  // MARK: latestType2Event() -
-    
+  // MARK: - func latestType2Event()
     func latestType2Event() -> (type2EventDate: Date, dateWasFound: Bool) { // This is only for HUD currency
         
         var t2T = 0, t2L = 0
@@ -831,10 +822,9 @@ struct ContentView: View {
         }
         
         return (qualifyingType2EventDate, wasFound)
-    }
+    } // END of func latestType2Event
     
-  // MARK: sixtyDaysCheck() -
-    
+  // MARK: - func sixtyDaysCheck()
     func sixtyDaysCheck(type: Int, eventDate: Date) -> (deltaToRef: Int, found: Bool) {
         
         var wasFound = false
@@ -850,10 +840,9 @@ struct ContentView: View {
             wasFound = delta < 60 ? true : false
         }
         return (delta, wasFound)
-    }
-
+    } // ENF of func sixtyDaysCheck
     
-}
+} // END of struct ContentView
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

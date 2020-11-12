@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11C1181D255AF02900249F62 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C1181C255AF02900249F62 /* Combine.framework */; };
 		8400141C24534BB3000E5F6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400141B24534BB3000E5F6A /* AppDelegate.swift */; };
 		8400141E24534BB3000E5F6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400141D24534BB3000E5F6A /* SceneDelegate.swift */; };
 		8400142124534BB3000E5F6A /* RecentExp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8400141F24534BB3000E5F6A /* RecentExp.xcdatamodeld */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11C1181C255AF02900249F62 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		8400141824534BB3000E5F6A /* RecentExp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecentExp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8400141B24534BB3000E5F6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8400141D24534BB3000E5F6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			files = (
 				8400145124534C79000E5F6A /* CloudKit.framework in Frameworks */,
 				84A6D6CA2454076B0060C65D /* SwiftUI.framework in Frameworks */,
+				11C1181D255AF02900249F62 /* Combine.framework in Frameworks */,
 				84A6D6C8245407090060C65D /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +182,7 @@
 		8400144F24534C79000E5F6A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				11C1181C255AF02900249F62 /* Combine.framework */,
 				84A6D6C92454076B0060C65D /* SwiftUI.framework */,
 				84A6D6C7245407090060C65D /* CoreData.framework */,
 				8400145024534C79000E5F6A /* CloudKit.framework */,
