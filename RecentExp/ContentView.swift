@@ -24,8 +24,9 @@ struct ContentView: View {
     
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
-    // formatter.dateStyle = .long
-     formatter.dateFormat = "dd MMM yy"
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateStyle = .medium // Nov 14, 2020
+     //   formatter.dateFormat = "dd MMM yy"
      return formatter
      }
         
