@@ -16,8 +16,9 @@ struct CreateEventView: View {
     
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
-    // formatter.dateStyle = .long
-     formatter.dateFormat = "dd MMM yy"
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateStyle = .medium // Nov 14, 2020
+     //   formatter.dateFormat = "dd MMM yy"
      return formatter
      }
     
@@ -132,15 +133,15 @@ struct CreateEventView: View {
             } // End of main VStack
             .navigationBarItems(
                 leading:
-                Button("Done") {
-                    self.createEvent()
-                }, // END of Button "Done"
+                    Button("Cancel") {
+                        //self.saveEdits()
+                        self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+                    }, // END of Button "Cancel"
                 trailing:
-                Button("Cancel") {
-                    //self.saveEdits()
-                    self.presentationMode.wrappedValue.dismiss() // This dismisses the view
-                } // END of Button "Cancel"
-            )
+                    Button("Done") {
+                        self.createEvent()
+                    } // END of Button "Done"
+            ) // End of navigationBarItems
                 .navigationBarTitle(viewTitle)
                 } // END of ScrollView
         } // END of Navigation View

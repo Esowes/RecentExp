@@ -33,7 +33,7 @@ struct SettingsView: View {
     @State private var isEraseAlertVisible = false
     @State private var dualTypeSelection = UserDefaults.standard.integer(forKey: kdualTypeSelection) // 0 is 330/350, 1 is 777/787
     @State private var rulesSelection = UserDefaults.standard.integer(forKey: krulesSelection) // 0 is ICAO, 1 is Air France
-    @State var appLanguage = Locale.preferredLanguages[0]
+   // @State var appLanguage = Locale.preferredLanguages[0]
 //    struct textFieldStyle: ViewModifier {
 //      func body(content: Content) -> some View {
 //        return content
@@ -101,6 +101,7 @@ struct SettingsView: View {
                  Group {
                     
                     Section(header: displayHeader(), footer: displayFooter()) {
+                        Text("Choose if you want the following data to be displayed :")
                         Toggle(isOn: $isAirportDisplayed) {
                            Text("Display airport code ?")
                         }
@@ -109,29 +110,7 @@ struct SettingsView: View {
                            Text("Display flight number ?")
                         }
                         .padding(.horizontal)
-                    }
-                    
-                    Section(header: languageHeader(), footer: languageFooter()) {
-                        HStack {
-                            if appLanguage == "en" {
-                                Text("English")
-                                    .padding(.leading)
-                            } else if appLanguage == "fr" {
-                                Text("French")
-                                .padding(.leading)
-                            } else {
-                                Text(appLanguage)
-                                    .padding(.leading)
-                            }
-                            Spacer()
-                            Button(action: openSettings ) {
-                                Text("Change language")
-                                .modifier(languageButtonDraw())
-                                    .padding(.trailing)
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
+                    }//.textCase(nil) // to prevent the header from being ALL CAPS !
                     
                 Section(header: eraseAllHeader()) {
                     // Erase all :
@@ -162,7 +141,7 @@ struct SettingsView: View {
             } // End of Group 2
         } // End of List
             .navigationBarItems(
-                leading:
+                trailing:
                 Button("Done") {
                         self.saveDefaults() // We try to save once more if needed
                     UserDefaults.standard.set(true, forKey: kinitialInstrViewed)
@@ -221,7 +200,7 @@ struct SettingsView: View {
 //    }
 }
 
-// MARK: Headers and Footers Structs for the List
+// MARK: - Headers and Footers Structs for the List
 struct userHeader: View {
     var body: some View {
         HStack {
@@ -273,6 +252,22 @@ struct CurrencyRulesFooter: View {
     }
 }
 
+struct displayHeader: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "slider.horizontal.below.rectangle")
+                .font(.headline)
+            Text("Display options")
+                .font(.headline)
+        }
+    }
+}
+struct displayFooter: View {
+    var body: some View {
+        Text("Not displaying these will result in faster input of event.\n")
+        .font(.body)
+    }
+}
 
 struct eraseAllHeader: View {
     var body: some View {
@@ -282,40 +277,6 @@ struct eraseAllHeader: View {
             Text("Destructive action !")
             .font(.headline)
         }
-    }
-}
-
-struct languageHeader: View {
-    var body: some View {
-        HStack {
-            Image(systemName: "globe")
-                .font(.headline)
-            Text("Language")
-            .font(.headline)
-        }
-    }
-}
-struct languageFooter: View {
-    var body: some View {
-        Text("Language footer")
-        .font(.body)
-    }
-}
-
-struct displayHeader: View {
-    var body: some View {
-        HStack {
-            Image(systemName: "slider.horizontal.below.rectangle")
-                .font(.headline)
-            Text("\nDisplay options.\nChoose if you want the following data to be displayed (and therefore, inputed !) :")
-            .font(.headline)
-        }
-    }
-}
-struct displayFooter: View {
-    var body: some View {
-        Text("Not displaying these will result in faster input of event.\n")
-        .font(/*@START_MENU_TOKEN@*/.body/*@END_MENU_TOKEN@*/)
     }
 }
 

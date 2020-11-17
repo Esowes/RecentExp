@@ -142,16 +142,16 @@ struct EditEventView: View {
                 } // End of VStack
                 .navigationBarItems(
                     leading:
-                    Button("Done") {
-                        print("Done pressed from editView")
-                        self.saveEdits()
-                        self.presentationMode.wrappedValue.dismiss() // This dismisses the view
-                    }, // END of Button "Done"
+                        Button("Cancel") {
+                            //self.saveEdits()
+                            self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+                        }, // END of Button "Cancel"
                     trailing:
-                    Button("Cancel") {
-                        //self.saveEdits()
-                        self.presentationMode.wrappedValue.dismiss() // This dismisses the view
-                    } // END of Button "Cancel"
+                        Button("Done") {
+                            print("Done pressed from editView")
+                            self.saveEdits()
+                            self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+                        } // END of Button "Done"
                 )
                 .navigationBarTitle("Event edition")
                 

@@ -16,8 +16,9 @@ struct EventRow: View {
     
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
-    // formatter.dateStyle = .long
-     formatter.dateFormat = "dd MMM yy"
+        formatter.locale = Locale(identifier: "en_US")
+       // formatter.dateStyle = .short // Nov 14, 2020
+        formatter.dateFormat = "MMM dd, yy"
      return formatter
      }
     
@@ -26,7 +27,7 @@ struct EventRow: View {
         return content
             .lineLimit(1)
             .allowsTightening(true)
-            .minimumScaleFactor(0.5)
+            .minimumScaleFactor(0.4)
         }
     }
     
@@ -45,7 +46,7 @@ struct EventRow: View {
                 .font(.callout)
                 .foregroundColor(Color(UIColor.systemBlue))
              }
-            Spacer(minLength: 0)
+            Spacer(minLength: 2.0)
         if UserDefaults.standard.bool(forKey: kairportNameDisplayed) && UserDefaults.standard.bool(forKey: kflightNumberDisplayed) {
             VStack {
                 Text(event.airportName ?? "")
@@ -70,7 +71,7 @@ struct EventRow: View {
                 .modifier(textLayout())
                 .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
             }
-            Spacer(minLength: 0)
+            Spacer(minLength: 2.0)
             if UserDefaults.standard.bool(forKey: kbiQualif) {
                 VStack {
                     Text(self.dateFormatter.string(from: event.eventDate ?? Date()) )
@@ -94,7 +95,7 @@ struct EventRow: View {
             } else // NOT biQualif
             {
                 Text(self.dateFormatter.string(from: event.eventDate ?? Date()) )
-                .font(.body)
+                .font(.footnote) // .callout is slightly larger
                 .modifier(textLayout())
                 .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
             }
