@@ -17,8 +17,8 @@ struct SettingsView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @StateObject var appState: AppState
-    
+   // @StateObject var appState: AppState
+    @ObservedObject var appState: AppState // Binding to the appState in main
     //@Binding var modalViewCaller : Int
         
     @FetchRequest(entity: Events.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Events.eventDate, ascending: false)]) var allEvents: FetchedResults<Events> // This fetches all the events

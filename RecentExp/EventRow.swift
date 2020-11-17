@@ -12,7 +12,7 @@ import CoreData
 struct EventRow: View {
     
     @ObservedObject var event: Events
-    @EnvironmentObject var appState: AppState
+    @ObservedObject var appState: AppState
     
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
@@ -133,10 +133,10 @@ struct EventRow_Previews: PreviewProvider {
         newEvent2.isSimulator = true
         
         return Group {
-            EventRow(event: newEvent).environment(\.managedObjectContext, context)
+            EventRow(event: newEvent, appState:AppState()).environment(\.managedObjectContext, context)
             .environmentObject(AppState())
         .previewLayout(.fixed(width: 300, height: 60))
-            EventRow(event: newEvent2).environment(\.managedObjectContext, context)
+            EventRow(event: newEvent2, appState:AppState()).environment(\.managedObjectContext, context)
                 .environmentObject(AppState())
             .previewLayout(.fixed(width: 300, height: 60))
         }

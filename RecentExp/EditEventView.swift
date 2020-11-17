@@ -52,7 +52,7 @@ struct EditEventView: View {
                     HStack {
                         Text("Airport : ")
                         TextField("IATA Code", text: $airportNameTextfield)
-                        //  .disabled(airportNameTextfield.count > 2) // To limit the textField to 3 chars (IATA code)
+                        .disabled(airportNameTextfield.count > 3) // To limit the textField to 3 chars (IATA code)
                             .autocapitalization(/*@START_MENU_TOKEN@*/.allCharacters/*@END_MENU_TOKEN@*/)
                             .onAppear() {
                                 self.airportNameTextfield = String(self.fetchedEvent.first?.airportName ?? "")
@@ -153,7 +153,7 @@ struct EditEventView: View {
                             self.presentationMode.wrappedValue.dismiss() // This dismisses the view
                         } // END of Button "Done"
                 )
-                .navigationBarTitle("Event edition")
+                .navigationBarTitle(self.fetchedEvent.first?.isLanding ?? false == true ? "Landing edit" : "Takeoff edit")
                 
             } // END of Navigation View
             .onAppear { // assigned fetched event date, here it is available (was not in init())

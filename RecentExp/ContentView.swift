@@ -142,7 +142,7 @@ struct ContentView: View {
                                 .padding(.top)
                                 List {
                                     ForEach (fetchedTakeoffs, id: \.self) { item in
-                                    EventRow(event: item)
+                                    EventRow(event: item, appState: appState)
                                         .contextMenu {
                                         Button(action: {
                                             self.modalViewCaller = 1 // To tell the sheet which view to display
@@ -202,7 +202,7 @@ struct ContentView: View {
         //                                   Text(item.airportName ?? "")
         //                                   Text(self.dateFormatter.string(from: item.eventDate!) )
         //                               }
-                                        EventRow(event: item)
+                                        EventRow(event: item, appState: appState)
                                         .contextMenu {
                                             
                                         Button(action: {
