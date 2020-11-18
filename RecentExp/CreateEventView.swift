@@ -68,7 +68,7 @@ struct CreateEventView: View {
                     .padding(.trailing)
                 } // End of HStack Airport
                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(UIColor.systemBlue), lineWidth: 1))
-                    .padding(.horizontal)
+                    .padding([.horizontal, .bottom])
             } // End of if isAirportFieldShown == true
                 
                 Divider()
@@ -99,7 +99,7 @@ struct CreateEventView: View {
                         .padding(.trailing)
                     } // End of HStack Airport
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(UIColor.systemBlue), lineWidth: 1))
-                        .padding(.horizontal)
+                    .padding([.horizontal, .bottom])
                 } // End of if isAirportFieldShown == true
                 
                     Divider()
@@ -136,7 +136,10 @@ struct CreateEventView: View {
     // *******************************************************
                     Divider()
                 
-                VStack {
+                VStack { // The date picker
+                    Text("Choose date")
+                        .padding([.horizontal, .bottom])
+
                     Button(action: {
                         self.selectedDate = Date()
                     }) {
@@ -155,7 +158,8 @@ struct CreateEventView: View {
                     Button("Cancel") {
                         //self.saveEdits()
                         self.presentationMode.wrappedValue.dismiss() // This dismisses the view
-                    }, // END of Button "Cancel"
+                    }
+                    .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/), // END of Button "Cancel"
                 trailing:
                     Button("Done") {
                         self.createEvent()
