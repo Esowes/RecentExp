@@ -49,6 +49,15 @@ struct CreateEventView: View {
                     .padding(.leading)
                     .frame(height: 40.0)
                     .autocapitalization(/*@START_MENU_TOKEN@*/.allCharacters/*@END_MENU_TOKEN@*/)
+                    .onChange(of: airportNameTextfield,
+                              perform: { (value) in
+                                if airportNameTextfield.count == 4 {
+                                    UIApplication.shared.endEditing() // Call to dismiss keyboard
+                                } else if airportNameTextfield.count >= 4 {
+                                    airportNameTextfield = String(airportNameTextfield.prefix(4))
+                                    UIApplication.shared.endEditing() // Call to dismiss keyboard
+                                }
+                              }) // This .onChange modifier ensures the text is limited to 4 chars
                    // .disabled(airportNameTextfield.count > 2) // To limit the textField to 3 chars (IATA code)
                     Button(action: {
                         self.airportNameTextfield = ""
@@ -71,6 +80,15 @@ struct CreateEventView: View {
                         .padding(.leading)
                         .frame(height: 40.0)
                         .autocapitalization(/*@START_MENU_TOKEN@*/.allCharacters/*@END_MENU_TOKEN@*/)
+                        .onChange(of: flightNumberTextfield,
+                                  perform: { (value) in
+                                    if flightNumberTextfield.count == 7 {
+                                        UIApplication.shared.endEditing() // Call to dismiss keyboard
+                                    } else if flightNumberTextfield.count >= 7 {
+                                        flightNumberTextfield = String(flightNumberTextfield.prefix(7))
+                                        UIApplication.shared.endEditing() // Call to dismiss keyboard
+                                    }
+                                  }) // This .onChange modifier ensures the text is limited to 7 chars
                        // .disabled(airportNameTextfield.count > 2) // To limit the textField to 3 chars (IATA code)
                         Button(action: {
                             self.flightNumberTextfield = ""
@@ -126,6 +144,7 @@ struct CreateEventView: View {
                             .font(.system(size: 20))
                     }
                     DatePicker("",selection: $selectedDate, displayedComponents: .date)
+                        .datePickerStyle(WheelDatePickerStyle())
                         .padding([.leading, .bottom, .trailing])
                         .labelsHidden()
                 }
