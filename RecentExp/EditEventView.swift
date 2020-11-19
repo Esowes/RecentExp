@@ -163,7 +163,8 @@ struct EditEventView: View {
                         Button("Cancel") {
                             //self.saveEdits()
                             self.presentationMode.wrappedValue.dismiss() // This dismisses the view
-                        }, // END of Button "Cancel"
+                        }
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/), // END of Button "Cancel", // END of Button "Cancel"
                     trailing:
                         Button("Done") {
                             print("Done pressed from editView")

@@ -77,9 +77,19 @@ struct ContentView: View {
                                     } // End of Takeoffs & Landings HStack
                                     .frame(maxWidth: 800)
                                     .padding(.top)
-                Divider()
+                            
+// MARK: - + button :
+                            Button(action: {
+                                self.modalViewCaller = 2 // To tell the sheet which view to display
+                                self.modalIsPresented = true
+                            })// END of "Add event" Button action
+                            {
+                                Image(systemName: "plus.rectangle")
+                                    .font(.system(size: 60))
+                            }
 
-
+                            Divider()
+                            
   // MARK: - Currency texts :
                 Group {
                     Text(recapString)
@@ -89,16 +99,17 @@ struct ContentView: View {
                     VStack {
                     Text(mainString)
                         .bold()
-                        .lineLimit(nil) // allows unlimited lines
-                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(isCurrent ? Color(UIColor.systemGreen) : Color(UIColor.systemRed))
                         .padding(.bottom)
                     Text(detailString)
-                        .lineLimit(nil) // allows unlimited lines
+                       // .lineLimit(nil) // allows unlimited lines
                     } // end of VStack
-                        .padding()
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(isCurrent ? Color(UIColor.systemGreen) : Color(UIColor.systemRed), lineWidth: 4))
-                        .padding()
+                    .lineLimit(nil) // allows unlimited lines
+                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .padding()
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(isCurrent ? Color(UIColor.systemGreen) : Color(UIColor.systemRed), lineWidth: 4))
+                    .padding()
                         
                     } // End of  3rd Group
             } // END of main VStack
@@ -109,7 +120,7 @@ struct ContentView: View {
             .navigationBarTitle("Airline Pilot Currency", displayMode: .inline)
             .navigationBarItems(leading: (
                 Button(action: {
-                    self.modalViewCaller = 5 // SettingsView
+                    self.modalViewCaller = 3 // SettingsView
                     self.modalIsPresented = true // setting this @State variable to true, hence changing its value, is enough to trigger the presentation of the modal view (the Sheet)
                 }
                     ) {
@@ -147,7 +158,7 @@ struct ContentView: View {
                                         Button(action: {
                                             self.modalViewCaller = 1 // To tell the sheet which view to display
                                             UserDefaults.standard.set(item.id?.uuidString, forKey: kactiveEventUUID)
-                                            UserDefaults.standard.set(false, forKey:kIsEventLanding)
+                                            UserDefaults.standard.set(false, forKey:kIsEventLanding) // not used, but does not hurt
                                             self.modalIsPresented = true
                                         })
                                         {   Text("Edit entry")
@@ -170,20 +181,7 @@ struct ContentView: View {
                                 .modifier(listsSetup())
                         
                             Spacer()
-                    // Add Takeoff button
-                            Button(action: {
-                                self.modalViewCaller = 3 // To tell the sheet which view to display
-                                UserDefaults.standard.set(false, forKey:kIsEventLanding)
-                                UserDefaults.standard.set("Add Takeoff", forKey:kEventCreationTitle)
-                                self.modalIsPresented = true
-                                
-                            } // END of "Add Takeoff" Button action
-                            ) {
-                                Image("addTakeoff")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 50)
-                            }
+                    
                         }
     } // end of func TakeoffStackView
     
@@ -206,9 +204,9 @@ struct ContentView: View {
                                         .contextMenu {
                                             
                                         Button(action: {
-                                            self.modalViewCaller = 2 // To tell the sheet which view to display
+                                            self.modalViewCaller = 1 // To tell the sheet which view to display
                                             UserDefaults.standard.set(item.id?.uuidString, forKey: kactiveEventUUID)
-                                            UserDefaults.standard.set(true, forKey:kIsEventLanding)
+                                            UserDefaults.standard.set(true, forKey:kIsEventLanding) // not used but does not hurt
                                             self.modalIsPresented = true
                                         })
                                         {   Text("Edit entry")
@@ -229,19 +227,7 @@ struct ContentView: View {
                                     .modifier(listsSetup())
                                // .padding(.trailing)
                                 Spacer()
-                                Button(action: {
-                                    self.modalViewCaller = 4 // To tell the sheet which view to display
-                                    UserDefaults.standard.set("Add Landing", forKey:kEventCreationTitle)
-                                    UserDefaults.standard.set(true, forKey:kIsEventLanding)
-
-                                    self.modalIsPresented = true
-                                })// END of "Add Takeoff" Button action
-                                {
-                                    Image("addLanding")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 50)
-                                }
+                                
                             } // End of Landings VStack
     } // end of func LandingStackView
     
@@ -252,29 +238,21 @@ struct ContentView: View {
         @ObservedObject var appState: AppState // Binding to the appState in main
         
         var body: some View {
-          if modalViewCaller == 1 {
+          if modalViewCaller == 1 { // Edit
             EditEventView().environment(\.managedObjectContext, self.managedObjectContext) // Due to a bug in SwiftUI, we need to pass the managedObjectContext
                     .modifier(DisableModalDismiss(disabled: true)) // This prevents the dismissal of the modal view by swiping down, thanks to the UIApplication extension in AppDelegate
                     .navigationViewStyle(StackNavigationViewStyle())
                     .onDisappear { self.modalViewCaller = 0 }
-            } else if modalViewCaller == 2 {
-                    EditEventView().environment(\.managedObjectContext, self.managedObjectContext)
-                    .modifier(DisableModalDismiss(disabled: true))
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    .onDisappear { self.modalViewCaller = 0 }
-            } else if modalViewCaller == 3 { // create event
+            } else if modalViewCaller == 2 { // create event
                 CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
                 .onDisappear { self.modalViewCaller = 0 }
-            } else if modalViewCaller == 4 {
-                CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
-                .modifier(DisableModalDismiss(disabled: true))
-                .navigationViewStyle(StackNavigationViewStyle())
-            } else if modalViewCaller == 5 {
+            } else if modalViewCaller == 3 { // settings
                 SettingsView(appState: appState).environment(\.managedObjectContext, self.managedObjectContext)
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
+                    .onDisappear { self.modalViewCaller = 0 }
                 }
         }
     } // END of func sheetContent

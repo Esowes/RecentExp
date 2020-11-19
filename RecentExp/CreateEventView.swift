@@ -34,10 +34,6 @@ struct CreateEventView: View {
     var isAirportFieldShown: Bool = UserDefaults.standard.bool(forKey: kairportNameDisplayed)
     var isFlightNumberShown: Bool = UserDefaults.standard.bool(forKey: kflightNumberDisplayed)
     
-    
-    var viewTitle: String = UserDefaults.standard.string(forKey: kEventCreationTitle) ?? "Event creation"
-    
-    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -180,7 +176,7 @@ struct CreateEventView: View {
                         self.createEvent()
                     } // END of Button "Done"
             ) // End of navigationBarItems
-                .navigationBarTitle(viewTitle)
+                .navigationBarTitle("Event creation")
                 } // END of ScrollView
         } // END of Navigation View
     } // END of some View
