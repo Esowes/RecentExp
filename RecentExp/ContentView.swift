@@ -262,7 +262,7 @@ struct ContentView: View {
                     .modifier(DisableModalDismiss(disabled: true))
                     .navigationViewStyle(StackNavigationViewStyle())
                     .onDisappear { self.modalViewCaller = 0 }
-            } else if modalViewCaller == 3 {
+            } else if modalViewCaller == 3 { // create event
                 CreateEventView().environment(\.managedObjectContext, self.managedObjectContext)
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())

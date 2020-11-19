@@ -29,6 +29,7 @@ struct CreateEventView: View {
     @State private var flightNumberTextfield = ""
     @State private var typeSelectorIndex = 0
     @State private var simulatorSelectorIndex = 0
+    @State private var eventTypeSelectorIndex = -1
     var isBiqualif: Bool = UserDefaults.standard.bool(forKey: kbiQualif)
     var isAirportFieldShown: Bool = UserDefaults.standard.bool(forKey: kairportNameDisplayed)
     var isFlightNumberShown: Bool = UserDefaults.standard.bool(forKey: kflightNumberDisplayed)
@@ -41,6 +42,20 @@ struct CreateEventView: View {
         NavigationView {
             ScrollView {
             VStack {
+                Group {
+                Text("Type of event")
+                    .padding(.top)
+                Picker("", selection: $eventTypeSelectorIndex) {
+                        Text("TAKEOFF").tag(0)
+                        Text("LANDING").tag(1)
+                        Text("BOTH").tag(2)
+                }
+                .padding([.horizontal, .bottom, .top])
+                .pickerStyle(SegmentedPickerStyle())
+                
+                Divider()
+                }
+                
                 if isAirportFieldShown == true {
                     Text("Enter Airport Code")
                         .padding(.top)
@@ -110,7 +125,7 @@ struct CreateEventView: View {
                             Text("Simulator").tag(1)
                     }
                     .padding([.horizontal, .bottom])
-                      .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(SegmentedPickerStyle())
                 
                 // The type picker if it's a biqualif
     // *******************************************************
@@ -187,12 +202,36 @@ struct CreateEventView: View {
         newEvent.eventDate = self.selectedDate
         newEvent.id = UUID()
         
-        if defaults.bool(forKey: kIsEventLanding) { // This was set in the "Add Takeoff" or "Add landing" buttons action
-            newEvent.isLanding = true
-        } else {
+        if eventTypeSelectorIndex == 0 // choix T-off
+        {
             newEvent.isLanding = false
         }
-        
+        else if eventTypeSelectorIndex == 1 // choix Ldg
+        {
+            newEvent.isLanding = true
+        }
+        else if eventTypeSelectorIndex == 2 // choix both
+        {
+            newEvent.isLanding = false // we create a takeoff, landing will be created below
+            
+            let newEvent2 = Events(context: self.managedObjectContext)
+            newEvent2.airportName = self.airportNameTextfield
+            newEvent2.flightNumber = self.flightNumberTextfield
+            if isBiqualif {
+                newEvent2.aircraftType = Int16(typeSelectorIndex + 1) // 1 is 330, 2 is 340
+            } else {
+                newEvent2.aircraftType = 0 // 0 is "generic" type for single type ratings
+            }
+            if self.simulatorSelectorIndex == 0 { // Flight
+                newEvent2.isSimulator = false
+            } else {
+                newEvent2.isSimulator = true
+            }
+            newEvent2.eventDate = self.selectedDate
+            newEvent2.id = UUID()
+            newEvent2.isLanding = true
+        }
+    
         
         
       //  print("saving edits in EditTakeoff view : the event is a simulator : \(String(describing: self.fetchedEvent.first?.isSimulator))")
