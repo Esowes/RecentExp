@@ -155,7 +155,7 @@ struct ContentView: View {
                                     ForEach (fetchedTakeoffs, id: \.self) { item in
                                     EventRow(event: item, appState: appState)
                                         .contextMenu {
-                                        Button(action: {
+                                        Button(action: { // Edit
                                             self.modalViewCaller = 1 // To tell the sheet which view to display
                                             UserDefaults.standard.set(item.id?.uuidString, forKey: kactiveEventUUID)
                                             UserDefaults.standard.set(false, forKey:kIsEventLanding) // not used, but does not hurt
@@ -164,7 +164,30 @@ struct ContentView: View {
                                         {   Text("Edit entry")
                                             Image(systemName: "square.and.pencil")
                                         }
-                                    } // END of ContextMenu
+                                        Button(action: { // Duplicate
+                                            let clonedEvent = Events(context: self.managedObjectContext)
+                                            clonedEvent.aircraftType = item.aircraftType
+                                            clonedEvent.airportName = item.airportName ?? ""
+                                            clonedEvent.eventDate = item.eventDate ?? Date()
+                                            clonedEvent.flightNumber = item.flightNumber ?? ""
+                                            clonedEvent.isLanding = item.isLanding
+                                            clonedEvent.isSimulator = item.isSimulator
+                                            clonedEvent.id = UUID()
+                                            
+                                            self.saveContext()
+                                        })
+                                        {   Text("Duplicate")
+                                            Image(systemName: "plus.square.on.square")
+                                        }
+                                            Button(action: { // Erase
+                                                self.managedObjectContext.delete(item)
+                                                self.saveContext()
+                                            })
+                                            {   Text("❗️DELETE entry❗️")
+                                                Image(systemName: "trash")
+                                                 //   .foregroundColor(.red) // No effect in SwiftUI 2.0
+                                            }
+                                    } // END of ContextMenu 
                                     
                                 } // For Each end
                                 .onDelete { indexSet in
@@ -202,7 +225,6 @@ struct ContentView: View {
         //                               }
                                         EventRow(event: item, appState: appState)
                                         .contextMenu {
-                                            
                                         Button(action: {
                                             self.modalViewCaller = 1 // To tell the sheet which view to display
                                             UserDefaults.standard.set(item.id?.uuidString, forKey: kactiveEventUUID)
@@ -211,6 +233,29 @@ struct ContentView: View {
                                         })
                                         {   Text("Edit entry")
                                             Image(systemName: "square.and.pencil")
+                                        }
+                                        Button(action: { // Duplicate
+                                            let clonedEvent = Events(context: self.managedObjectContext)
+                                            clonedEvent.aircraftType = item.aircraftType
+                                            clonedEvent.airportName = item.airportName ?? ""
+                                            clonedEvent.eventDate = item.eventDate ?? Date()
+                                            clonedEvent.flightNumber = item.flightNumber ?? ""
+                                            clonedEvent.isLanding = item.isLanding
+                                            clonedEvent.isSimulator = item.isSimulator
+                                            clonedEvent.id = UUID()
+                                            
+                                            self.saveContext()
+                                        })
+                                        {   Text("Duplicate")
+                                            Image(systemName: "plus.square.on.square")
+                                        }
+                                        Button(action: { // Erase
+                                            self.managedObjectContext.delete(item)
+                                            self.saveContext()
+                                        })
+                                        {   Text("❗️DELETE entry❗️")
+                                            Image(systemName: "trash")
+                                             //   .foregroundColor(.red) // No effect in SwiftUI 2.0
                                         }
                                     } // END of ContextMenu
                                 } // For Each end

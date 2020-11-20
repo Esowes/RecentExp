@@ -69,7 +69,6 @@ struct CreateEventView: View {
                                     UIApplication.shared.endEditing() // Call to dismiss keyboard
                                 }
                               }) // This .onChange modifier ensures the text is limited to 4 chars
-                   // .disabled(airportNameTextfield.count > 2) // To limit the textField to 3 chars (IATA code)
                     Button(action: {
                         self.airportNameTextfield = ""
                     }) {
@@ -80,9 +79,11 @@ struct CreateEventView: View {
                 } // End of HStack Airport
                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(UIColor.systemBlue), lineWidth: 1))
                     .padding([.horizontal, .bottom])
+                    
+                    Divider()
             } // End of if isAirportFieldShown == true
                 
-                Divider()
+               
                 
                     if isFlightNumberShown == true {
                         Text("Enter Flight number")
@@ -100,7 +101,6 @@ struct CreateEventView: View {
                                         UIApplication.shared.endEditing() // Call to dismiss keyboard
                                     }
                                   }) // This .onChange modifier ensures the text is limited to 7 chars
-                       // .disabled(airportNameTextfield.count > 2) // To limit the textField to 3 chars (IATA code)
                         Button(action: {
                             self.flightNumberTextfield = ""
                         }) {
@@ -111,9 +111,10 @@ struct CreateEventView: View {
                     } // End of HStack Airport
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(UIColor.systemBlue), lineWidth: 1))
                     .padding([.horizontal, .bottom])
+                        Divider()
                 } // End of if isAirportFieldShown == true
                 
-                    Divider()
+                    
                 
                 // The Flight / Sim picker :
                     Picker("", selection: $simulatorSelectorIndex) {
@@ -155,10 +156,10 @@ struct CreateEventView: View {
                         self.selectedDate = Date()
                     }) {
                         Text("Today")
-                            .font(.system(size: 20))
                     }
                     DatePicker("",selection: $selectedDate, displayedComponents: .date)
                         .datePickerStyle(WheelDatePickerStyle())
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(UIColor.systemBlue), lineWidth: 1))
                         .padding([.leading, .bottom, .trailing])
                         .labelsHidden()
                 }
@@ -176,7 +177,7 @@ struct CreateEventView: View {
                         self.createEvent()
                     } // END of Button "Done"
             ) // End of navigationBarItems
-                .navigationBarTitle("Event creation")
+            .navigationBarTitle("Event creation")
                 } // END of ScrollView
         } // END of Navigation View
     } // END of some View
