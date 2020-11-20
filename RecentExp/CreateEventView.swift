@@ -41,13 +41,22 @@ struct CreateEventView: View {
                 Group {
                 Text("Type of event")
                     .padding(.top)
-                Picker("", selection: $eventTypeSelectorIndex) {
+                    Picker("", selection: $eventTypeSelectorIndex.animation()) { // added the .animation() in order to animate the appearence / dissappearence of the textfield
                         Text("TAKEOFF").tag(0)
                         Text("LANDING").tag(1)
                         Text("BOTH").tag(2)
                 }
                 .padding([.horizontal, .bottom, .top])
                 .pickerStyle(SegmentedPickerStyle())
+                    
+                    if eventTypeSelectorIndex == 2 {
+                        
+                        Text("You've chosen to create both a takeoff and a landing.\nPlease note that both these events will have the same Type (Flight or Simulator) as well as Airport and/or Flight number if these settings are enabled.")
+                            .font(.footnote)
+                            .padding(.horizontal)
+                            .animation(.easeInOut)
+                    }
+                    
                 
                 Divider()
                 }
