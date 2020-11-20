@@ -33,6 +33,7 @@ struct EditEventView: View {
     
     @State var selectedDate = Date()
 
+    @State var isEmptyFieldAlertPresented = false
     
     @State private var airportNameTextfield = ""
     @State private var flightNumberTextfield = ""
@@ -196,9 +197,26 @@ struct EditEventView: View {
                     trailing:
                         Button("Done") {
                             print("Done pressed from editView")
-                            self.saveEdits()
-                            self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+                            
+                            // Alert in empty fields :
+                            if isAirportFieldShown == true && airportNameTextfield.count == 0 // Le champ Airport est affiché et il est encore vide
+                            {
+                                isEmptyFieldAlertPresented = true
+                            } else if isFlightNumberFieldShown == true && flightNumberTextfield.count == 0 // Le champ FltNumber est affiché et il est encore vide
+                            {
+                                isEmptyFieldAlertPresented = true
+                            } else {
+                                self.saveEdits()
+                                self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+                            }
+                            
                         } // END of Button "Done"
+                        .alert(isPresented: $isEmptyFieldAlertPresented) { () -> Alert in
+                            return Alert(title: Text("❗️WARNING❗️")
+                                .foregroundColor(Color(UIColor.systemRed)), message: Text(
+                            "Airport name and/or Flight number is empty, event cannot be saved."
+                          ), dismissButton: .default(Text("Ooops")))
+                        }// End of Alert
                 )
                 .navigationBarTitle(self.fetchedEvent.first?.isLanding ?? false == true ? "Landing edit" : "Takeoff edit")
             } // END of Scrollview

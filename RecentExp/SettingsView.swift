@@ -136,7 +136,7 @@ struct SettingsView: View {
                             }, secondaryButton: .destructive(Text("YES, I'm sure")) {
                                 self.eraseAllEvents()
                             })
-                    }
+                    }// End of Alert
                 } // End of Others section
             } // End of Group 2
         } // End of List

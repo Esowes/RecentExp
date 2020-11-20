@@ -24,6 +24,9 @@ struct CreateEventView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
     
+    @State var isEmptyFieldAlertPresented = false
+
+    
     @State private var selectedDate = Date()
     @State private var airportNameTextfield = ""
     @State private var flightNumberTextfield = ""
@@ -183,8 +186,24 @@ struct CreateEventView: View {
                     .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/), // END of Button "Cancel"
                 trailing:
                     Button("Done") {
-                        self.createEvent()
+                        // Alert in empty fields :
+                        if isAirportFieldShown == true && airportNameTextfield.count == 0 // Le champ Airport est affiché et il est encore vide
+                        {
+                            isEmptyFieldAlertPresented = true
+                        } else if isFlightNumberShown == true && flightNumberTextfield.count == 0 // Le champ FltNumber est affiché et il est encore vide
+                        {
+                            isEmptyFieldAlertPresented = true
+                        } else {
+                            self.createEvent()
+                        }
+                        
                     } // END of Button "Done"
+                    .alert(isPresented: $isEmptyFieldAlertPresented) { () -> Alert in
+                        return Alert(title: Text("❗️WARNING❗️")
+                            .foregroundColor(Color(UIColor.systemRed)), message: Text(
+                        "Airport name and/or Flight number is empty, event cannot be saved."
+                      ), dismissButton: .default(Text("Ooops")))
+                    }// End of Alert
             ) // End of navigationBarItems
             .navigationBarTitle("Event creation")
                 } // END of ScrollView
