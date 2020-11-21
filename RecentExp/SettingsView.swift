@@ -65,7 +65,7 @@ struct SettingsView: View {
             List {
                 Group {
                     Section(header: userHeader(), footer: userFooter(myBool: isBiQualif)) {
-                        Toggle(isOn: $isBiQualif) {
+                        Toggle(isOn: $isBiQualif.animation()) {
                            Text("Dual type 330/350 or 777/787 ?")
                         }
                         .padding(.horizontal)
@@ -75,6 +75,7 @@ struct SettingsView: View {
                                 Text("777 / 787").tag(1)
                             }.pickerStyle(SegmentedPickerStyle())
                             .padding(.horizontal)
+                            .animation(.easeInOut)
                         }
 //                    if isBiQualif { // AF Rules has extra requirements for 330/340 dual-type rated Instructors
 //                        Toggle(isOn: $isInstructor) {
@@ -85,7 +86,7 @@ struct SettingsView: View {
                     } // End of section "users"
                 
                 Section(header: CurrencyRulesHeader(), footer: CurrencyRulesFooter(ruleSelect: rulesSelection)) {
-                    Picker("", selection: $rulesSelection){
+                    Picker("", selection: $rulesSelection.animation()){
                         Text("ICAO").tag(0)
                         Text("Air France").tag(1)
                     }.pickerStyle(SegmentedPickerStyle())
@@ -222,6 +223,7 @@ struct userFooter: View {
             myString = ""
         }
        return Text(myString).font(/*@START_MENU_TOKEN@*/.body/*@END_MENU_TOKEN@*/)
+        .animation(.easeInOut)
     }
     
 }
@@ -249,6 +251,7 @@ struct CurrencyRulesFooter: View {
             myString = "At least one takeoff and one landing has to be done in actual aircraft (either type if Mixed Fleet Flying)."
         }
         return Text(myString).font(/*@START_MENU_TOKEN@*/.body/*@END_MENU_TOKEN@*/)
+            .animation(.easeInOut)
     }
 }
 
