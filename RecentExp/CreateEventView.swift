@@ -239,7 +239,7 @@ struct CreateEventView: View {
         {
             newEvent.isLanding = false // we create a takeoff, landing will be created below
             
-            let newEvent2 = Events(context: self.managedObjectContext)
+            /*let newEvent2 = Events(context: self.managedObjectContext)
             newEvent2.airportName = self.airportNameTextfield
             newEvent2.flightNumber = self.flightNumberTextfield
             if isBiqualif {
@@ -254,7 +254,12 @@ struct CreateEventView: View {
             }
             newEvent2.eventDate = self.selectedDate
             newEvent2.id = UUID()
+            newEvent2.isLanding = true*/
+            
+            // Cloning method :
+            let newEvent2 = cloneManagedObject(event: newEvent)
             newEvent2.isLanding = true
+            
         }
     
         
@@ -276,6 +281,21 @@ struct CreateEventView: View {
     
     private func dismissView() {
         self.presentationMode.wrappedValue.dismiss() // This dismisses the view
+    }
+    
+    public func cloneManagedObject(event:Events) -> Events {
+    //1.create a new ManagedObject :
+        let clonedObject = Events(context: self.managedObjectContext)
+    //2.set all the attributes of this object
+        clonedObject.aircraftType = event.aircraftType
+        clonedObject.airportName = event.airportName
+        clonedObject.eventDate = event.eventDate
+        clonedObject.flightNumber = event.flightNumber
+        clonedObject.isLanding = event.isLanding
+        clonedObject.isSimulator = event.isSimulator
+        clonedObject.id = UUID()
+
+        return clonedObject
     }
     
 }
