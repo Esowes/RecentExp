@@ -76,7 +76,7 @@ struct EventRow: View {
                     VStack {
                         Text(self.dateFormatter.string(from: event.eventDate ?? Date()) )
                         .font(.callout) // .footnote is slightly smaller
-                            .foregroundColor(event.eventDate ?? Date() > Date() ? Color(UIColor.systemRed) : Color(UIColor.black))
+                            .foregroundColor(event.eventDate ?? Date() > Date() ? Color(UIColor.systemRed) : Color(UIColor.systemGray))
                         .modifier(textLayout())
                         Spacer()
                         if event.aircraftType == 1 { //330 ou 777
@@ -97,7 +97,7 @@ struct EventRow: View {
                 {
                     Text(self.dateFormatter.string(from: event.eventDate ?? Date()) )
                     .font(.callout) // .footnote is slightly smaller
-                        .foregroundColor(event.eventDate ?? Date() > Date() ? Color(UIColor.systemRed) : Color(UIColor.black))
+                        .foregroundColor(event.eventDate ?? Date() > Date() ? Color(UIColor.systemRed) : Color(UIColor.systemGray))
                     .modifier(textLayout())
                     .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0))
                 }

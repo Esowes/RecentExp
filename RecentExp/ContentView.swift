@@ -118,7 +118,7 @@ struct ContentView: View {
                 print("\n\n*********** Content View onAppear triggered ! ************\n")
             }
             .navigationBarTitle("Airline Pilot Currency", displayMode: .inline)
-            .navigationBarItems(leading: (
+            .navigationBarItems(leading:
                 Button(action: {
                     self.modalViewCaller = 3 // SettingsView
                     self.modalIsPresented = true // setting this @State variable to true, hence changing its value, is enough to trigger the presentation of the modal view (the Sheet)
@@ -128,7 +128,17 @@ struct ContentView: View {
                             .imageScale(.large)
                            // .font(.system(size: 30))
                      }
-            ))
+            , trailing:
+                Button(action: {
+                    self.modalViewCaller = 4 // HelpView
+                    self.modalIsPresented = true // setting this @State variable to true, hence changing its value, is enough to trigger the presentation of the modal view (the Sheet)
+                }
+                    ) {
+                        Image(systemName: "questionmark.circle")
+                            .imageScale(.large)
+                           // .font(.system(size: 30))
+                     }
+            )
         } // End of ScrollView
             
         } // END of NavigationView
@@ -295,6 +305,11 @@ struct ContentView: View {
                 .onDisappear { self.modalViewCaller = 0 }
             } else if modalViewCaller == 3 { // settings
                 SettingsView(appState: appState).environment(\.managedObjectContext, self.managedObjectContext)
+                .modifier(DisableModalDismiss(disabled: true))
+                .navigationViewStyle(StackNavigationViewStyle())
+                    .onDisappear { self.modalViewCaller = 0 }
+            } else if modalViewCaller == 4 { // Help
+                HelpView()
                 .modifier(DisableModalDismiss(disabled: true))
                 .navigationViewStyle(StackNavigationViewStyle())
                     .onDisappear { self.modalViewCaller = 0 }
