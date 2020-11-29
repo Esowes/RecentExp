@@ -269,29 +269,45 @@ struct CreateEventView: View {
         {
             newEvent.isLanding = false // we create a takeoff, landing will be created below
             
-            /*let newEvent2 = Events(context: self.managedObjectContext)
-            newEvent2.airportName = self.airportNameTextfield
-            newEvent2.flightNumber = self.flightNumberTextfield
-            if isBiqualif {
-                newEvent2.aircraftType = Int16(typeSelectorIndex + 1) // 1 is 330, 2 is 340
-            } else {
-                newEvent2.aircraftType = 0 // 0 is "generic" type for single type ratings
-            }
-            if self.simulatorSelectorIndex == 0 { // Flight
-                newEvent2.isSimulator = false
-            } else {
-                newEvent2.isSimulator = true
-            }
-            newEvent2.eventDate = self.selectedDate
-            newEvent2.id = UUID()
-            newEvent2.isLanding = true*/
-            
             // Cloning method :
             let newEvent2 = cloneManagedObject(event: newEvent)
             newEvent2.isLanding = true
-            
         }
     
+        
+        if numberOfIdenticalEventsSelectorIndex == 1 // we create 2 events
+        {
+                if eventTypeSelectorIndex == 0 || eventTypeSelectorIndex == 1// choix T-off ou landing
+                {
+                    let newEvent3 = cloneManagedObject(event: newEvent)
+                }
+                else if eventTypeSelectorIndex == 2 // choix takeoff AND landing
+                {
+                    let newEvent3 = cloneManagedObject(event: newEvent)
+                    let newEvent4 = cloneManagedObject(event: newEvent3)
+                    newEvent4.isLanding = !newEvent3.isLanding
+                }
+        }
+         else if numberOfIdenticalEventsSelectorIndex == 2 // we create 3 events
+         {
+            // code for 3 items
+            if eventTypeSelectorIndex == 0 || eventTypeSelectorIndex == 1// choix T-off ou landing
+            {
+                let newEvent3 = cloneManagedObject(event: newEvent)
+                let newEvent4 = cloneManagedObject(event: newEvent)
+            }
+            else if eventTypeSelectorIndex == 2 // choix takeoff AND landing
+            {
+                let newEvent3 = cloneManagedObject(event: newEvent)
+                let newEvent4 = cloneManagedObject(event: newEvent3)
+                newEvent4.isLanding = !newEvent3.isLanding
+                
+                let newEvent5 = cloneManagedObject(event: newEvent)
+                let newEvent6 = cloneManagedObject(event: newEvent3)
+                newEvent6.isLanding = !newEvent5.isLanding
+            }
+         }
+
         
         
       //  print("saving edits in EditTakeoff view : the event is a simulator : \(String(describing: self.fetchedEvent.first?.isSimulator))")
