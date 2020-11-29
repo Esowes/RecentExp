@@ -29,6 +29,9 @@ struct SettingsView: View {
     
     @State private var isAirportDisplayed = UserDefaults.standard.bool(forKey: kairportNameDisplayed)
     @State private var isFlightNumberDisplayed = UserDefaults.standard.bool(forKey: kflightNumberDisplayed)
+    @State var allowMultipleEventsCreation = UserDefaults.standard.bool(forKey: kAllowMultipleIdenticalEvents)
+
+    
     
     @State private var isEraseAlertVisible = false
     @State private var dualTypeSelection = UserDefaults.standard.integer(forKey: kdualTypeSelection) // 0 is 330/350, 1 is 777/787
@@ -49,16 +52,17 @@ struct SettingsView: View {
 //          .keyboardType(/*@START_MENU_TOKEN@*/.numberPad/*@END_MENU_TOKEN@*/)
 //      }
 //    }
-    struct languageButtonDraw: ViewModifier {
-      func body(content: Content) -> some View {
-        return content
-            .font(.headline)
-            .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-            .background(Color(UIColor.systemBlue))
-            .cornerRadius(12)
-            .foregroundColor(Color.white)
-        }
-    }
+//    struct languageButtonDraw: ViewModifier {
+//      func body(content: Content) -> some View {
+//        return content
+//            .font(.headline)
+//            .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+//            .background(Color(UIColor.systemBlue))
+//            .cornerRadius(12)
+//            .foregroundColor(Color.white)
+//        }
+//    }
+    
     var body: some View {
         
         NavigationView {
@@ -101,14 +105,18 @@ struct SettingsView: View {
                 } // End og Group 1
                  Group {
                     
-                    Section(header: displayHeader(), footer: displayFooter()) {
-                        Text("Choose if you want the following data to be displayed :")
+                    Section(header: displayHeader(), footer: displayFooter(doesAllowMultipleEvents: allowMultipleEventsCreation)) {
+                      //  Text("Choose if you want the following data to be displayed :")
                         Toggle(isOn: $isAirportDisplayed) {
-                           Text("Display airport code ?")
+                           Text("Input airport code ?")
                         }
                         .padding(.horizontal)
                         Toggle(isOn: $isFlightNumberDisplayed) {
-                           Text("Display flight number ?")
+                           Text("Input flight number ?")
+                        }
+                        .padding(.horizontal)
+                        Toggle(isOn: $allowMultipleEventsCreation.animation()) {
+                           Text("Allow multiple identical events creation ?")
                         }
                         .padding(.horizontal)
                     }//.textCase(nil) // to prevent the header from being ALL CAPS !
@@ -138,7 +146,7 @@ struct SettingsView: View {
                                 self.eraseAllEvents()
                             })
                     }// End of Alert
-                } // End of Others section
+                } // End of Erase section
             } // End of Group 2
         } // End of List
             .navigationBarItems(
@@ -176,6 +184,9 @@ struct SettingsView: View {
         UserDefaults.standard.set(rulesSelection, forKey: krulesSelection)
         UserDefaults.standard.set(isAirportDisplayed, forKey: kairportNameDisplayed)
         UserDefaults.standard.set(isFlightNumberDisplayed, forKey: kflightNumberDisplayed)
+        UserDefaults.standard.set(allowMultipleEventsCreation, forKey: kAllowMultipleIdenticalEvents)
+
+        
         
         self.appState.updateValues() // This is a func from the AppState class
         
@@ -208,7 +219,8 @@ struct userHeader: View {
             Image(systemName: "person")
                 .font(.headline)
             Text("User profile")
-            .font(.headline)
+                .font(.headline)
+                .textCase(.none)
         }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
     }
 }
@@ -235,6 +247,7 @@ struct CurrencyRulesHeader: View {
             .font(.headline)
             Text("Currency rules")
                 .font(.headline)
+                .textCase(.none)
         }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
     }
 }
@@ -245,10 +258,10 @@ struct CurrencyRulesFooter: View {
         var myString: LocalizedStringKey = "" // Using LocalizedStringKey in order to get a returned localized string
         if ruleSelect == 0 // ICAO
         {
-            myString = "All takeoffs & landings can be done in either aircraft or simulator."
+            myString = "All takeoffs & landings can be done in either aircraft or simulator.\n"
         } else  // AF
         {
-            myString = "At least one takeoff and one landing has to be done in actual aircraft (either type if Mixed Fleet Flying)."
+            myString = "At least one takeoff and one landing has to be done in actual aircraft (either type if Mixed Fleet Flying).\n"
         }
         return Text(myString).font(/*@START_MENU_TOKEN@*/.body/*@END_MENU_TOKEN@*/)
             .animation(.easeInOut)
@@ -260,15 +273,24 @@ struct displayHeader: View {
         HStack {
             Image(systemName: "slider.horizontal.below.rectangle")
                 .font(.headline)
-            Text("Display options")
+            Text("Input options")
                 .font(.headline)
+                .textCase(.none)
         }
     }
 }
 struct displayFooter: View {
+    var doesAllowMultipleEvents : Bool
     var body: some View {
-        Text("Not displaying these will result in faster input of event.\n")
-        .font(.body)
+        VStack {
+            if doesAllowMultipleEvents {
+                Text("When adding an event, you will be given the option to create 1, 2 or 3 identical events at the same time.\n")
+                    .animation(.easeInOut)
+            } else {
+                Text("\n")
+            }
+        }.font(.body)
+        
     }
 }
 
@@ -279,6 +301,7 @@ struct eraseAllHeader: View {
             .font(.headline)
             Text("Destructive action !")
             .font(.headline)
+            .textCase(.none)
         }
     }
 }

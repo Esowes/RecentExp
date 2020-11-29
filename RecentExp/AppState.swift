@@ -19,6 +19,8 @@ class AppState: ObservableObject {
     @Published var isFltNbDisplayed: Bool = UserDefaults.standard.bool(forKey: kflightNumberDisplayed)
     @Published var isairportDisplayed: Bool = UserDefaults.standard.bool(forKey: kairportNameDisplayed)
     @Published var wasAppStateChanged: Bool = UserDefaults.standard.bool(forKey: kappStateChanged)
+    @Published var allowMultipleIdenticalEvents: Bool = UserDefaults.standard.bool(forKey: kAllowMultipleIdenticalEvents)
+
     
     
     func updateValues() {
@@ -29,6 +31,8 @@ class AppState: ObservableObject {
         self.isTRI = UserDefaults.standard.bool(forKey: kisInstructor)
         self.isFltNbDisplayed = UserDefaults.standard.bool(forKey: kflightNumberDisplayed)
         self.isairportDisplayed = UserDefaults.standard.bool(forKey: kairportNameDisplayed)
+        self.allowMultipleIdenticalEvents = UserDefaults.standard.bool(forKey: kAllowMultipleIdenticalEvents)
+
         
         
         UserDefaults.standard.set(true, forKey: kappStateChanged)

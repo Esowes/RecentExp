@@ -24,4 +24,5 @@ let kflightNumberDisplayed = "Flight number is displayed"
 let kairportNameDisplayed = "Airport name is displayed"
 let kappStateChanged = "appStateChanged"
 let kinitialInstrViewed = "initialInstructionViewed"
+let kAllowMultipleIdenticalEvents = "allowMultipleIdenticalEventsCreation"
 

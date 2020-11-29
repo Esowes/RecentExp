@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         "Flight number is displayed" : true,
         "Airport name is displayed" : true,
         "appStateChanged": true,
-        "initialInstructionViewed" : false
+        "initialInstructionViewed" : false,
+        "allowMultipleIdenticalEventsCreation" : false
         ])
         
         return true
