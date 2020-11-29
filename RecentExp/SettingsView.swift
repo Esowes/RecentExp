@@ -70,7 +70,7 @@ struct SettingsView: View {
                 Group {
                     Section(header: userHeader(), footer: userFooter(myBool: isBiQualif)) {
                         Toggle(isOn: $isBiQualif.animation()) {
-                           Text("Dual type 330/350 or 777/787 ?")
+                           Text("Mixed Fleet 330/350 or 777/787 ?")
                         }
                         .padding(.horizontal)
                         if isBiQualif {
@@ -218,7 +218,7 @@ struct userHeader: View {
         HStack {
             Image(systemName: "person")
                 .font(.headline)
-            Text("User profile")
+            Text("Pilot profile")
                 .font(.headline)
                 .textCase(.none)
         }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
@@ -258,10 +258,10 @@ struct CurrencyRulesFooter: View {
         var myString: LocalizedStringKey = "" // Using LocalizedStringKey in order to get a returned localized string
         if ruleSelect == 0 // ICAO
         {
-            myString = "All takeoffs & landings can be done in either aircraft or simulator.\n"
+            myString = "All takeoffs & landings can be done in a simulator.\n"
         } else  // AF
         {
-            myString = "At least one takeoff and one landing has to be done in actual aircraft (either type if Mixed Fleet Flying).\n"
+            myString = "At least one takeoff and one landing has to be done in an actual aircraft (either type if Mixed Fleet Flying).\n"
         }
         return Text(myString).font(/*@START_MENU_TOKEN@*/.body/*@END_MENU_TOKEN@*/)
             .animation(.easeInOut)

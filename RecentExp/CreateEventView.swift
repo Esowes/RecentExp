@@ -31,11 +31,13 @@ struct CreateEventView: View {
     @State private var airportNameTextfield = ""
     @State private var flightNumberTextfield = ""
     @State private var typeSelectorIndex = 0
+    @State private var numberOfIdenticalEventsSelectorIndex = 0
     @State private var simulatorSelectorIndex = 0
     @State private var eventTypeSelectorIndex = -1
     var isBiqualif: Bool = UserDefaults.standard.bool(forKey: kbiQualif)
     var isAirportFieldShown: Bool = UserDefaults.standard.bool(forKey: kairportNameDisplayed)
     var isFlightNumberShown: Bool = UserDefaults.standard.bool(forKey: kflightNumberDisplayed)
+    var isMultipleEventsCreationAllowed: Bool = UserDefaults.standard.bool(forKey: kAllowMultipleIdenticalEvents)
     
     var body: some View {
         NavigationView {
@@ -63,10 +65,12 @@ struct CreateEventView: View {
                 
                 Divider()
                 }
+
+  // ************************* Flight data ******************************
                 
                 if isAirportFieldShown == true {
                     Text("Enter Airport Code")
-                        .padding(.top)
+                        //.padding(.top)
                     HStack {
                 TextField("IATA or ICAO Code", text: $airportNameTextfield)
                     .padding(.leading)
@@ -127,13 +131,13 @@ struct CreateEventView: View {
                 } // End of if isAirportFieldShown == true
                 
                     
+    // ************************* Flight / Sim picker ******************************
                 
-                // The Flight / Sim picker :
                     Picker("", selection: $simulatorSelectorIndex) {
                             Text("Flight").tag(0)
                             Text("Simulator").tag(1)
                     }
-                    .padding([.horizontal, .bottom])
+                    .padding(.horizontal)
                     .pickerStyle(SegmentedPickerStyle())
                 
                 // The type picker if it's a biqualif
@@ -144,7 +148,7 @@ struct CreateEventView: View {
                                 Text("330").tag(0)
                                 Text("350").tag(1)
                               }
-                            .padding(.horizontal)
+                            .padding([.horizontal, .top])
                             .pickerStyle(SegmentedPickerStyle())
                         } // END of if 330/350
                         else if UserDefaults.standard.integer(forKey: kdualTypeSelection) == 1 { // 777/787
@@ -153,13 +157,39 @@ struct CreateEventView: View {
                                   Text("787").tag(1)
                               }
                             .pickerStyle(SegmentedPickerStyle())
-                            .padding(.horizontal)
+                            .padding([.horizontal, .top])
                         }
 
                     } //  End of if isBiqualif statement for Type Picker
-    // *******************************************************
+    
                     Divider()
+    // ************************* number of events ******************************
+
+                if isMultipleEventsCreationAllowed == true {
+                        Text("Number of identical events to be created")
+                            .padding(.horizontal)
+                    Picker("", selection: $numberOfIdenticalEventsSelectorIndex.animation()) { // added the .animation() in order to animate the appearence / dissappearence of the textfield
+                        Text("1").tag(0)
+                        Text("2").tag(1)
+                        Text("3").tag(2)
+                }
+                .padding([.horizontal, .bottom, .top])
+                .pickerStyle(SegmentedPickerStyle())
+                   // .accentColor(Color(UIColor.systemBlue))  // this has no effect
+                    
+                    if numberOfIdenticalEventsSelectorIndex != 0 {
+                        
+                        Text("\(numberOfIdenticalEventsSelectorIndex+1) identical events will be created.")
+                            .font(.footnote)
+                            .padding(.horizontal)
+                            .animation(.easeInOut)
+                    }
+                    
                 
+                Divider()
+                    
+                }
+    // ************************* Date Picker ******************************
                 VStack { // The date picker
                     Text("Choose date")
                         .padding([.horizontal, .bottom])
