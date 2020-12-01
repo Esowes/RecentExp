@@ -449,18 +449,18 @@ struct ContentView: View {
     if UserDefaults.standard.integer(forKey: krulesSelection) == 0 { // ICAO
         if UserDefaults.standard.bool(forKey: kbiQualif)
         {
-            currencyRules = 1
+            currencyRules = 1 // ICAO, biKlif
         } else // Not biQualif
         {
-            currencyRules = 0
+            currencyRules = 0 // ICAO, mono
         }
     } else if UserDefaults.standard.integer(forKey: krulesSelection) == 1 { // AF Rules
         if UserDefaults.standard.bool(forKey: kbiQualif)
         {
-            currencyRules = 3
+            currencyRules = 3 // AF, biKlif
         } else // Not biQualif
         {
-            currencyRules = 2
+            currencyRules = 2 // AF, mono
         }
     }
     
@@ -500,6 +500,7 @@ struct ContentView: View {
                     aString = "Not Current since \(dateFormatter.string(from: currencydate)), \(daysDiff == 1 ? "\(daysDiff) day ago." : "\(daysDiff) days ago.")"
                     isCurrent = "0"
                 }
+        // MARK: ICAO bi -
         if currencyRules == 1 { // ICAO bi, we have to check for HUD currency
             if self.latestType2Event().1 { // a type 2 event was found
                 // We check to see if 180 days have not passed since :
@@ -837,7 +838,8 @@ struct ContentView: View {
             
         for index in 0..<cT {
             
-            if fetchedTakeoffs[index].aircraftType == 2 {
+            if fetchedTakeoffs[index].aircraftType == 2 // HUD type (787 or 350)
+            {
                 t2T += 1
                 latestType2ToffDate = fetchedTakeoffs[index].eventDate ?? Date()
                 wasFound = true
@@ -850,7 +852,8 @@ struct ContentView: View {
             
             for index in 0..<cL {
                 
-                if fetchedLandings[index].aircraftType == 2 {
+                if fetchedLandings[index].aircraftType == 2 // HUD type (787 or 350)
+                {
                     t2L += 1
                     latestType2LandingDate = fetchedLandings[index].eventDate ?? Date()
                     wasFound = true

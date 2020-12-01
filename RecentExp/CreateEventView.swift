@@ -245,7 +245,7 @@ struct CreateEventView: View {
         newEvent.airportName = self.airportNameTextfield
         newEvent.flightNumber = self.flightNumberTextfield
         if isBiqualif {
-            newEvent.aircraftType = Int16(typeSelectorIndex + 1) // 1 is 330, 2 is 340
+            newEvent.aircraftType = Int16(typeSelectorIndex + 1) // 1 is 330 OR 777, 2 is 350 OR 787
         } else {
             newEvent.aircraftType = 0 // 0 is "generic" type for single type ratings
         }

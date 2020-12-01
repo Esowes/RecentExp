@@ -16,15 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         UserDefaults.standard.register(defaults: [
-        "biTypeRated": false,
-        "dual type": 0, // 0 is 330/350, 1 is 777/787
-        "rules selection": 0, // 0 is ICAO rules, 1 is AF rules
-        "Is User Instructor" : false,
-        "Flight number is displayed" : true,
-        "Airport name is displayed" : true,
+        "sync biTypeRated": false,
+        "sync dual type": 0, // 0 is 330/350, 1 is 777/787
+        "sync rules selection": 0, // 0 is ICAO rules, 1 is AF rules
+        "sync Is User Instructor" : false,
+        "sync Flight number is displayed" : true,
+        "sync Airport name is displayed" : true,
         "appStateChanged": true,
         "initialInstructionViewed" : false,
-        "allowMultipleIdenticalEventsCreation" : false
+        "sync allowMultipleIdenticalEventsCreation" : false
         ])
         
        MKiCloudSync.start(withPrefix: "sync") // From Hacking with Swift: https://www.hackingwithswift.com/example-code/system/how-to-store-userdefaults-options-in-icloud
