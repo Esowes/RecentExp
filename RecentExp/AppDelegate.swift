@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         "allowMultipleIdenticalEventsCreation" : false
         ])
         
+       MKiCloudSync.start(withPrefix: "sync") // From Hacking with Swift: https://www.hackingwithswift.com/example-code/system/how-to-store-userdefaults-options-in-icloud
+        
+        
         return true
     }
 

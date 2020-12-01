@@ -21,7 +21,7 @@ struct ContentView: View {
 
     @State var modalIsPresented = false // The "settingsView" modally presented as a sheet
     @State var screenSizeHeight: CGFloat = 0.0 // This is for the GeometryReader
-    
+        
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -143,7 +143,12 @@ struct ContentView: View {
             
         } // END of NavigationView
                 .onAppear() {
+                    NotificationCenter.default.addObserver(forName: NSNotification.Name("MKiCloudSyncDidUpdateToLatest"), object: nil, queue: .main) { (_) in
+                        self.appState.updateValues()
+                        print("\n\n*****\nNotif was received in the onAppear mod in ContentView of an update from MKiCloudSync.m \n*****\n\n")
+                                }
                     self.appState.updateValues()
+                    
                 }
             } // End of GeometryReader
         } // End of ZStack

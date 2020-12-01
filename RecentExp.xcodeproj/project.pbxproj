@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11B4526F25700E4900F29D3F /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4526E25700E4900F29D3F /* HelpView.swift */; };
 		11C1181D255AF02900249F62 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C1181C255AF02900249F62 /* Combine.framework */; };
+		11EB6CDB25763BF900653ECD /* MKiCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 11EB6CDA25763BF900653ECD /* MKiCloudSync.m */; };
 		8400141C24534BB3000E5F6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400141B24534BB3000E5F6A /* AppDelegate.swift */; };
 		8400141E24534BB3000E5F6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400141D24534BB3000E5F6A /* SceneDelegate.swift */; };
 		8400142124534BB3000E5F6A /* RecentExp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8400141F24534BB3000E5F6A /* RecentExp.xcdatamodeld */; };
@@ -49,6 +50,9 @@
 /* Begin PBXFileReference section */
 		11B4526E25700E4900F29D3F /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		11C1181C255AF02900249F62 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
+		11EB6CD825763BF800653ECD /* RecentExp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RecentExp-Bridging-Header.h"; sourceTree = "<group>"; };
+		11EB6CD925763BF900653ECD /* MKiCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKiCloudSync.h; sourceTree = "<group>"; };
+		11EB6CDA25763BF900653ECD /* MKiCloudSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKiCloudSync.m; sourceTree = "<group>"; };
 		8400141824534BB3000E5F6A /* RecentExp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecentExp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8400141B24534BB3000E5F6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8400141D24534BB3000E5F6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,12 +143,15 @@
 				8400145624534ECD000E5F6A /* EditEventView.swift */,
 				840AB342245CA7A400395DDB /* CreateEventView.swift */,
 				11B4526E25700E4900F29D3F /* HelpView.swift */,
+				11EB6CD925763BF900653ECD /* MKiCloudSync.h */,
+				11EB6CDA25763BF900653ECD /* MKiCloudSync.m */,
 				8400142424534BB7000E5F6A /* Assets.xcassets */,
 				8400142924534BB7000E5F6A /* LaunchScreen.storyboard */,
 				8400145424534EB0000E5F6A /* constants.swift */,
 				8400142C24534BB7000E5F6A /* Info.plist */,
 				8400141F24534BB3000E5F6A /* RecentExp.xcdatamodeld */,
 				8400142624534BB7000E5F6A /* Preview Content */,
+				11EB6CD825763BF800653ECD /* RecentExp-Bridging-Header.h */,
 			);
 			path = RecentExp;
 			sourceTree = "<group>";
@@ -254,6 +261,7 @@
 				TargetAttributes = {
 					8400141724534BB3000E5F6A = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1220;
 					};
 					8400143024534BB7000E5F6A = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -327,6 +335,7 @@
 				8400141E24534BB3000E5F6A /* SceneDelegate.swift in Sources */,
 				84FB69BF246EFA0600058427 /* EventRow.swift in Sources */,
 				8400145524534EB0000E5F6A /* constants.swift in Sources */,
+				11EB6CDB25763BF900653ECD /* MKiCloudSync.m in Sources */,
 				8400145724534ECE000E5F6A /* EditEventView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +505,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-debug";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RecentExp/RecentExp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
@@ -509,6 +519,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.RecentExp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RecentExp/RecentExp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -518,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-debug";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RecentExp/RecentExp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
@@ -531,6 +544,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.RecentExp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RecentExp/RecentExp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
