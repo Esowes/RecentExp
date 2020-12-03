@@ -68,12 +68,14 @@ struct ContentView: View {
         
         return ZStack {
             GeometryReader { g in
+                
                 NavigationView {
                     ScrollView {
                         VStack {
                             HStack {
-                                self.TakeoffStackView(inputHeight: g.size.height) // GeometryReader will be updated on rotation of iPad
-                                self.LandingStackView(inputHeight: g.size.height)
+                                self.TakeoffStackView(inputHeight: g.size.height, screenWidth: g.size.width) // GeometryReader will be updated on rotation of iPad
+                                
+                                self.LandingStackView(inputHeight: g.size.height, screenWidth: g.size.width)
                                     } // End of Takeoffs & Landings HStack
                                     .frame(maxWidth: 800)
                                     .padding(.top)
@@ -116,6 +118,8 @@ struct ContentView: View {
             .onAppear() {
                 self.modalViewCaller = 0
                 print("\n\n*********** Content View onAppear triggered ! ************\n")
+                print("\n\n----------------------\nScreen width from ContentView Geometry reader is :\(g.size.width)")
+                
             }
             .navigationBarTitle("Airline Pilot Currency", displayMode: .inline)
             .navigationBarItems(leading:
@@ -159,7 +163,7 @@ struct ContentView: View {
 
     } // END of var body: some View
   // MARK: - TakeoffStackView()
-    @ViewBuilder func TakeoffStackView(inputHeight: CGFloat) -> some View {
+    @ViewBuilder func TakeoffStackView(inputHeight: CGFloat, screenWidth: CGFloat) -> some View {
            VStack { // Takeoffs Vstack
                             VStack {
                             Text("Takeoffs")
@@ -168,7 +172,7 @@ struct ContentView: View {
                                 .padding(.top)
                                 List {
                                     ForEach (fetchedTakeoffs, id: \.self) { item in
-                                    EventRow(event: item, appState: appState)
+                                    EventRow(event: item, appState: appState, screenWidth: screenWidth)
                                         .contextMenu {
                                         Button(action: { // Edit
                                             self.modalViewCaller = 1 // To tell the sheet which view to display
@@ -224,7 +228,7 @@ struct ContentView: View {
     } // end of func TakeoffStackView
     
   // MARK: - LandingStackView()
-      @ViewBuilder func LandingStackView(inputHeight: CGFloat) -> some View {
+      @ViewBuilder func LandingStackView(inputHeight: CGFloat, screenWidth: CGFloat) -> some View {
         VStack { // Landings Vstack
                                 VStack {
                                 Text("Landings")
@@ -238,7 +242,7 @@ struct ContentView: View {
         //                                   Text(item.airportName ?? "")
         //                                   Text(self.dateFormatter.string(from: item.eventDate!) )
         //                               }
-                                        EventRow(event: item, appState: appState)
+                                        EventRow(event: item, appState: appState, screenWidth: screenWidth)
                                         .contextMenu {
                                         Button(action: {
                                             self.modalViewCaller = 1 // To tell the sheet which view to display
@@ -493,7 +497,7 @@ struct ContentView: View {
             isCurrent = "1"
         } else if currencydate > refDate { // current until a future date
             
-            aString = "Current until \(dateFormatter.string(from: currencydate)) - \(daysDiff == 1 ? "\(daysDiff) day -" : "\(daysDiff) days -")"
+            aString = "Current until \(dateFormatter.string(from: currencydate))\n- \(daysDiff == 1 ? "\(daysDiff) day -" : "\(daysDiff) days -")"
                     isCurrent = "1"
             
                 } else { // Not current
@@ -517,7 +521,15 @@ struct ContentView: View {
                     bString = "Seems like a sim session is in order."
                 }
             }
-        } else
+            else // a HUD event was NOT found
+            {
+                isCurrent = "0"
+                aString = "Not current due to no HUD operations."
+                bString = "In order to maintain Mixed Fleet Flying privileges, you need at least one takeoff or landing using the HUD.\nIf you are qualified on 2 types but only fly on one, deselect the Mixed Fleet option in settings."
+            }
+        }
+        else
+// MARK: ICAO mono -
         { // ICAO mono
                         if isCurrent == "1" {
             bString = "Limiting event was \(limitingEventString), on \(dateFormatter.string(from: limitingDate))."
@@ -578,7 +590,7 @@ struct ContentView: View {
         
    // MARK: - AF biQualif
         
-    else if currencyRules == 3 {// AF Rules bi : we need at least one takeoff and one landing in real aircraft AND less than 60 days between takeoff and landing on same type
+    else if currencyRules == 3 {// AF Rules bi : we need at least one takeoff and one landing in real aircraft AND less than 60 days between takeoff and landing on same type AND 180 days Req
             
             if toffScan.metReq && ldgScan.metReq // 3 events with at least one real for both toffs and ldgs
             {
@@ -723,7 +735,7 @@ struct ContentView: View {
                 bString = "\(btString)\n\(blString)"
             }
         } // END of if isCurrent
-            else
+            else // isCurrent == 0
             {
                 bString = "Seems like a sim session is in order."
             }
@@ -747,6 +759,33 @@ struct ContentView: View {
                 bString = "No real takeoffs in the last 90 days.\nA sim session is in order."
                 isCurrent = "0"
             }
+        
+        // At last, we check for HUD currency :
+        
+        if isCurrent == "1" // all other conditions are met
+        {
+            if self.latestType2Event().1 { // a type 2 event was found
+                // We check to see if 180 days have not passed since :
+                if date180Prior > latestType2Event().0 {
+                    isCurrent = "0"
+                    aString = "Not current due to overdue HUD operations."
+                    bString = "On the reference date, you will not have used the HUD in over 180 days "
+                } else if isCurrent == "1"
+                {
+                    let hudDaysDiff = Calendar.current.dateComponents([.day], from: refDate, to: latestType2Event().0).day ?? 0
+                    bString = "Limiting event was \(limitingEventString), on \(dateFormatter.string(from: limitingDate)).\nLatest HUD use was on \(dateFormatter.string(from: latestType2Event().0)), you have to use it again within the next \(180+hudDaysDiff == 1 ? "1 day." : "\(180+hudDaysDiff) days." )"
+                } else
+                {
+                    bString = "Seems like a sim session is in order."
+                }
+            }
+            else // a HUD event was NOT found
+            {
+                isCurrent = "0"
+                aString = "Not current due to no HUD operations."
+                bString = "In order to maintain Mixed Fleet Flying privileges, you need at least one takeoff or landing using the HUD.\nIf you are qualified on 2 types but only fly on one, deselect the Mixed Fleet option in settings."
+            }
+        }
 
         } // End of if currencyRules == 3
   
@@ -843,6 +882,7 @@ struct ContentView: View {
                 t2T += 1
                 latestType2ToffDate = fetchedTakeoffs[index].eventDate ?? Date()
                 wasFound = true
+                print("\n¨¨¨¨¨¨¨¨¨¨¨\na hud Takeoff was found\n\n¨¨¨¨¨¨¨¨¨¨")
             }
             if t2T == 1 {
                 print("latest type 2 takeoff was on \(dateFormatter.string(from: latestType2ToffDate))")
@@ -857,6 +897,7 @@ struct ContentView: View {
                     t2L += 1
                     latestType2LandingDate = fetchedLandings[index].eventDate ?? Date()
                     wasFound = true
+                    print("\n¨¨¨¨¨¨¨¨¨¨¨\na hud Landing was found\n\n¨¨¨¨¨¨¨¨¨¨")
                 }
                 if t2L == 1 {
                     print("latest type 2 landing was on \(dateFormatter.string(from: latestType2LandingDate))")

@@ -14,11 +14,16 @@ struct EventRow: View {
     @ObservedObject var event: Events
     @ObservedObject var appState: AppState
     
+    var screenWidth: CGFloat
+    
+    
+    
+    
     var dateFormatter: DateFormatter {
      let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US")
        // formatter.dateStyle = .short // Nov 14, 2020
-        formatter.dateFormat = "MMM dd, yy"
+        formatter.dateFormat = screenWidth > 500 ? "MMM dd, yy" : "MMM dd"
      return formatter
      }
     
@@ -32,7 +37,9 @@ struct EventRow: View {
     }
     
     var body: some View {
+        
             VStack {
+                
             HStack (alignment: .center)
             {
                 if event.isSimulator
@@ -132,10 +139,10 @@ struct EventRow_Previews: PreviewProvider {
         newEvent2.isSimulator = true
         
         return Group {
-            EventRow(event: newEvent, appState:AppState()).environment(\.managedObjectContext, context)
+            EventRow(event: newEvent, appState:AppState(), screenWidth: 1200).environment(\.managedObjectContext, context)
             .environmentObject(AppState())
         .previewLayout(.fixed(width: 300, height: 60))
-            EventRow(event: newEvent2, appState:AppState()).environment(\.managedObjectContext, context)
+            EventRow(event: newEvent2, appState:AppState(), screenWidth: 1200).environment(\.managedObjectContext, context)
                 .environmentObject(AppState())
             .previewLayout(.fixed(width: 300, height: 60))
         }
